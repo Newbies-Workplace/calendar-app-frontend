@@ -13,7 +13,8 @@ function App() {
   
   return (
     <>
-    <div>
+    {/*
+    <div className='btext'>
       
       <h1>Mam na imię {name}</h1>
       <h2>Mam {age} lat</h2>
@@ -30,9 +31,10 @@ function App() {
       <button onClick={() => {setAge(age - 1)}}>Usuń rok</button>
       <button onClick={() => {setAge(age - 10)}}>Usuń 10</button>
     </div>
+    */}
     <br></br><br></br>
     <div>
-      
+      <button class="big">test</button>
     </div>
     </>
   )
