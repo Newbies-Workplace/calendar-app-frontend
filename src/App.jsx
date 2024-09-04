@@ -14,6 +14,16 @@ function App() {
   return (
     <>
     {/*
+    
+    Numer: {age}
+    <br></br>
+    <div>
+      <button >Test</button>
+      <br></br>
+      <button className='secondary' onClick={() => {setAge(age + 1)}}>Test2</button>
+
+    </div>
+    */}
     <div className='btext'>
       
       <h1>Mam na imię {name}</h1>
@@ -30,11 +40,6 @@ function App() {
       <br></br>
       <button onClick={() => {setAge(age - 1)}}>Usuń rok</button>
       <button onClick={() => {setAge(age - 10)}}>Usuń 10</button>
-    </div>
-    */}
-    <br></br><br></br>
-    <div>
-      <button class="big">test</button>
     </div>
     </>
   )
