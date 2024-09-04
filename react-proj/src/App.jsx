@@ -10,9 +10,7 @@ function App() {
   const inputChange = (event) => {
     setName(event.target.value);
   };
-  const incAge = () => {
-    setAge(age + 1);
-  };
+  
   return (
     <>
     <div>
