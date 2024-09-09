@@ -9,7 +9,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #c5c5c5;
+  background-color: #474747;    /**/
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -73,6 +73,7 @@ button.secondary {
 button.secondary:active {
   background-color: #c2c2c4;
 }
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
