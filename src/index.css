@@ -39,7 +39,7 @@ h1 {
   line-height: 1.1;
 }
 
-button {
+button.main {
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.7em 1.15em;
@@ -85,4 +85,25 @@ button.secondary:active {
   button {
     background-color: #f9f9f9;
   }
+}
+
+
+button.image {
+
+  width: auto;
+  height: auto;
+  min-width: 25px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background-repeat: no-repeat;
+  background-color: #393941;
+  aspect-ratio: 1 / 1;
+}
+
+
+button.image.share {
+  background-image: url(assets/share.svg);
+}
+button.image.close {
+  background-image: url(assets/close.svg);
 }
