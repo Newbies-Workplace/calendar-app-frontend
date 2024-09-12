@@ -1,14 +1,15 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import Frontpage from './Frontpage.jsx'
 import './index.css'
+import Day from './components/Day.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
-    <button className='image close'></button>
-    <br></br>
-    <button className='image share'></button>
-    
+    {/* <Frontpage />
+    <button className='image close'> </button>
+    <button className='image share'> </button>
+    <button className='image calendar'> </button> */}
+    <Day></Day>
   </StrictMode>,
 )

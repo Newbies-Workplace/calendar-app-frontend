@@ -5,6 +5,7 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
+  line-height-step: 3px;
   font-weight: 400;
 
   color-scheme: light dark;
@@ -37,73 +38,4 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-button.main {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.7em 1.15em;
-  font-size: 16px; /* było wcześniej 1em ??????*/
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: 0.25s;
-}
-button:hover {
-  background-color: #33333b;
-}
-
-button:active {
-  background-color: #2e2e3400;
-}
-button[disabled] {
-  background-color: #c2c2c4ce;
-  cursor: not-allowed;
-}
-
-button.small {
-  font-size: 10px;
-  padding: 0.5em 1em;
-}
-button.secondary {
-  background-color: #ebebec;
-  color: black;
-}
-button.secondary:active {
-  background-color: #c2c2c4;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
-
-
-button.image {
-
-  width: auto;
-  height: auto;
-  min-width: 25px;
-  border: 1px solid transparent;
-  border-radius: 5px;
-  background-repeat: no-repeat;
-  background-color: #393941;
-  aspect-ratio: 1 / 1;
-}
-
-
-button.image.share {
-  background-image: url(assets/share.svg);
-}
-button.image.close {
-  background-image: url(assets/close.svg);
 }
