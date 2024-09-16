@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import Frontpage from "./Frontpage.jsx";
 import "./index.css";
 import Day from "./components/Day.jsx";
+import Month from "./components/Month.jsx";
 
 const votes = [{ status: true, isCurrentUserVote: true }];
 
@@ -12,7 +13,7 @@ createRoot(document.getElementById("root")).render(
     <button className='image close'> </button>
     <button className='image share'> </button>
     <button className='image calendar'> </button> */}
-    <Day
+    {/* <Day
       dayNumber="1"
       votes={[
         { status: true, isCurrentUserVote: true },
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")).render(
         { status: false, isCurrentUserVote: false },
       ]}
     />
-    <Day dayNumber="3" votes={[]} />
+    <Day dayNumber="3" votes={[]} /> */}
+    <Month year="2024" monthNumber="10"></Month>
   </StrictMode>
 );

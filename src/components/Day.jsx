@@ -13,8 +13,12 @@ function Day(props) {
   //console.log(JSON.stringify(props));
   const [fill, setFill] = useState("bg-[#ebebec]");
   const currentVote = props.votes.find((vote) => vote.isCurrentUserVote);
+  const [view, setView] = useState("");
 
   useEffect(() => {
+    if (props.hidden) {
+      setView("invisible");
+    }
     if (props.votes.length <= 0) {
       return;
     }
@@ -36,13 +40,13 @@ function Day(props) {
   }, [props.votes]);
 
   return (
-    <>
+    <div className={`${view}`}>
       <div
-        className={` block w-[100px] h-[100px] bg-no-repeat flex flex-col justify-between items-start relative p-1 rounded-lg border-4 ${fill} `}
+        className={` block w-[100px] h-[100px] bg-no-repeat flex flex-col justify-between items-start relative p-1 rounded-lg border-4 ${fill} ${view}`}
       >
         <div className={style.circleRow}>
           <div
-            className={`w-[16px] h-[16px] rounded-full border border-black ${currentVote === undefined ? "bg-[#ebebec]" : currentVote.status ? "bg-green-400" : "bg-red-500"}`}
+            className={`w-[16px] h-[16px] rounded-full border border-black ${currentVote === undefined ? "bg-[#ebebec]" : currentVote.status ? "bg-green-400" : "bg-red-500"} ${view}`}
           />
 
           {props.votes.map((value, index) => {
@@ -50,7 +54,7 @@ function Day(props) {
               return (
                 <div
                   key={index}
-                  className={`w-[16px] h-[16px] rounded-full  border-black ${value.status ? "bg-green-400" : "bg-red-500"}`}
+                  className={`w-[16px] h-[16px] rounded-full  border-black ${value.status ? "bg-green-400" : "bg-red-500"} ${view}`}
                 />
               );
           })}
@@ -58,7 +62,7 @@ function Day(props) {
         </div>
         <div className={style.number}>{props.dayNumber}</div>
       </div>
-    </>
+    </div>
   );
 }
 
