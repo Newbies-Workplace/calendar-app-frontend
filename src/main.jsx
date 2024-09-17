@@ -13,7 +13,7 @@ createRoot(document.getElementById("root")).render(
     <button className='image close'> </button>
     <button className='image share'> </button>
     <button className='image calendar'> </button> */}
-    {/* <Day
+    <Day
       dayNumber="1"
       votes={[
         { status: true, isCurrentUserVote: true },
@@ -29,12 +29,14 @@ createRoot(document.getElementById("root")).render(
     />
     <Day
       dayNumber="3"
+      hidden={false}
       votes={[
         { status: true, isCurrentUserVote: true },
         { status: false, isCurrentUserVote: false },
       ]}
     />
-    <Day dayNumber="3" votes={[]} /> */}
+    <Day dayNumber="4" votes={[]} hidden />
+    <Month year="2024" monthNumber="9"></Month>
     <Month year="2024" monthNumber="10"></Month>
   </StrictMode>
 );

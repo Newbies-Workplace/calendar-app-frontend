@@ -16,12 +16,15 @@ function Day(props) {
   const [view, setView] = useState("");
 
   useEffect(() => {
-    if (props.hidden) {
+    if (props.hidden === true) {
+      setFill("bg-gray-500");
       setView("invisible");
+      return;
     }
     if (props.votes.length <= 0) {
       return;
     }
+
     if (
       props.votes.every((vote) => {
         return vote.status == true;
@@ -33,16 +36,16 @@ function Day(props) {
         return vote.status == false;
       })
     ) {
-      setFill("bg-red-300");
+      setFill("bg-red-400");
     } else {
       setFill("bg-yellow-500");
     }
   }, [props.votes]);
 
   return (
-    <div className={`${view}`}>
+    <div>
       <div
-        className={` block w-[100px] h-[100px] bg-no-repeat flex flex-col justify-between items-start relative p-1 rounded-lg border-4 ${fill} ${view}`}
+        className={` block w-[100px] h-[100px] bg-no-repeat flex flex-col justify-between items-start relative p-1 rounded-lg border-transparent border-4 ${fill} `}
       >
         <div className={style.circleRow}>
           <div
