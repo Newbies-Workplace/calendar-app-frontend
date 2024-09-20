@@ -5,25 +5,23 @@ import { useEffect, useState } from "react";
 
 function Month(props) {
   const daysInMonth = dayjs(`${props.year}-${props.monthNumber}`).daysInMonth();
-  const [startDayOfWeek, setStartDay] = useState(
-    dayjs(`${props.year}-${props.monthNumber}-01`).day()
-  ); // Sunday = 0, Monday = 1, etc.
+  const startDayOfWeekDayJs = dayjs(
+    `${props.year}-${props.monthNumber}-01`
+  ).day();
   const weekDays = ["pn", "wt", "śr", "cz", "pt", "so", "nd"];
   const daysArray = Array.from(
     { length: daysInMonth },
     (_, index) => index + 1
   );
   const monthName = dayjs(`${props.year}-${props.monthNumber}`).format("MMMM");
-  useEffect(() => {
-    if (startDayOfWeek === 0) {
-      setStartDay(7);
-    }
-  }, [startDayOfWeek]);
+  const startDayOfWeek = startDayOfWeekDayJs === 0 ? 7 : startDayOfWeekDayJs;
+
   const emptyDays = Array.from(
     { length: startDayOfWeek },
     (_, index) => index + 1
   );
-
+  const voteBeginDate = parseInt(dayjs(`${props.start}`).format("DD"));
+  const voteEndDate = dayjs(`${props.end}`).format("DD");
   return (
     <>
       <div className="flex flex-col items-center w-[700px]">
@@ -43,9 +41,27 @@ function Month(props) {
             <div key={index} />
           ))}
           {/* test */}
-          {daysArray.map((day, index) => (
-            <Day key={index} votes={[]} dayNumber={index + 1} />
-          ))}
+
+          {daysArray.map((day, index) => {
+            const formattedMonth = String(props.monthNumber).padStart(2, "0");
+            const formattedDay = String(index + 1).padStart(2, "0");
+            const votefound = props.info.find(
+              (vote) =>
+                vote.dayNumber ===
+                `${props.year}-${formattedMonth}-${formattedDay}`
+            );
+            console.log(`${props.year}-${props.monthNumber}-${index + 1}`);
+            return (
+              <Day
+                key={index}
+                votes={votefound === undefined ? [] : votefound.votes}
+                dayNumber={index + 1}
+                hidden={
+                  index + 1 < voteBeginDate || index + 1 > parseInt(voteEndDate)
+                }
+              />
+            );
+          })}
         </div>
       </div>
     </>
