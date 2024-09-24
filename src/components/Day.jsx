@@ -41,31 +41,34 @@ function Day(props) {
       setBackgroundColor("bg-yellow-500");
     }
   }, [props.votes]);
-
+  const testufunc = () => {
+    console.log("hidden");
+  };
   return (
-    <div>
-      <div
-        className={` block w-[100px] h-[100px] bg-no-repeat flex flex-col justify-between items-start relative p-1 rounded-lg border-transparent border-4 ${backgroundColor} `}
-      >
-        <div className={style.circleRow}>
-          <div
-            className={`w-[16px] h-[16px] rounded-full border border-black ${currentVote === undefined ? "bg-[#ebebec]" : currentVote.status ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
-          />
+    <>
+      <div onClick={props.hidden ? testufunc : props.onClick}>
+        <div
+          className={` block w-[100px] h-[100px] bg-no-repeat flex flex-col justify-between items-start relative p-1 rounded-lg border-transparent border-4 ${backgroundColor} `}
+        >
+          <div className={style.circleRow}>
+            <div
+              className={`w-[16px] h-[16px] rounded-full border border-black ${currentVote === undefined ? "bg-[#ebebec]" : currentVote.status ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
+            />
 
-          {props.votes.map((value, index) => {
-            if (!value.isCurrentUserVote)
-              return (
-                <div
-                  key={index}
-                  className={`w-[16px] h-[16px] rounded-full  border-black ${value.status ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
-                />
-              );
-          })}
-          {/*${props.obj.color}*/}
+            {props.votes.map((value, index) => {
+              if (!value.isCurrentUserVote)
+                return (
+                  <div
+                    key={index}
+                    className={`w-[16px] h-[16px] rounded-full  border-black ${value.status ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
+                  />
+                );
+            })}
+          </div>
+          <div className={style.number}>{props.dayNumber}</div>
         </div>
-        <div className={style.number}>{props.dayNumber}</div>
       </div>
-    </div>
+    </>
   );
 }
 

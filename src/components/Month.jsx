@@ -50,7 +50,6 @@ function Month(props) {
                 vote.dayNumber ===
                 `${props.year}-${formattedMonth}-${formattedDay}`
             );
-            console.log(`${props.year}-${props.monthNumber}-${index + 1}`);
             return (
               <Day
                 key={index}
@@ -59,6 +58,9 @@ function Month(props) {
                 hidden={
                   index + 1 < voteBeginDate || index + 1 > parseInt(voteEndDate)
                 }
+                onClick={() => {
+                  props.dayClick(index + 1);
+                }}
               />
             );
           })}
