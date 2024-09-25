@@ -73,3 +73,37 @@ function Day(props) {
 }
 
 export default Day;
+
+/* 
+<Day
+        dayNumber="1"
+        votes={[
+          { status: true, isCurrentUserVote: true },
+          { status: true, isCurrentUserVote: false },
+        ]}
+        onClick={() => {
+          click("1");
+        }}
+      />
+      <Day
+        dayNumber="2"
+        votes={[
+          { status: false, isCurrentUserVote: true },
+          { status: false, isCurrentUserVote: false },
+        ]}
+        onClick={() => {
+          click("2");
+        }}
+      />
+      <Day
+        dayNumber="3"
+        hidden={false}
+        votes={[
+          { status: true, isCurrentUserVote: true },
+          { status: false, isCurrentUserVote: false },
+        ]}
+        onClick={() => {
+          click("3");
+        }}
+      />
+      <Day dayNumber="4" votes={[]} hidden /> */

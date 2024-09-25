@@ -59,7 +59,11 @@ function Month(props) {
                   index + 1 < voteBeginDate || index + 1 > parseInt(voteEndDate)
                 }
                 onClick={() => {
-                  props.dayClick(index + 1);
+                  props.dayClick(
+                    dayjs(
+                      `${props.year}-${props.monthNumber}-${index + 1}`
+                    ).format("DD-MM-YYYY")
+                  );
                 }}
               />
             );

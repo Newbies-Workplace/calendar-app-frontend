@@ -2,6 +2,9 @@ import "../App.css";
 import Month from "../components/Month.jsx";
 import Modal from "../components/Modal.jsx";
 import Day from "../components/Day.jsx";
+import EndVoteModal from "../components/EndVoteModal.jsx";
+import DayModal from "../components/DayModal.jsx";
+import HelpModal from "../components/HelpModal.jsx";
 import { useState } from "react";
 
 const votelist = [
@@ -38,38 +41,6 @@ function SecondPage(props) {
   };
   return (
     <>
-      <Day
-        dayNumber="1"
-        votes={[
-          { status: true, isCurrentUserVote: true },
-          { status: true, isCurrentUserVote: false },
-        ]}
-        onClick={() => {
-          click("1");
-        }}
-      />
-      <Day
-        dayNumber="2"
-        votes={[
-          { status: false, isCurrentUserVote: true },
-          { status: false, isCurrentUserVote: false },
-        ]}
-        onClick={() => {
-          click("2");
-        }}
-      />
-      <Day
-        dayNumber="3"
-        hidden={false}
-        votes={[
-          { status: true, isCurrentUserVote: true },
-          { status: false, isCurrentUserVote: false },
-        ]}
-        onClick={() => {
-          click("3");
-        }}
-      />
-      <Day dayNumber="4" votes={[]} hidden />
       <Month
         year="2024"
         monthNumber="9"
@@ -81,16 +52,9 @@ function SecondPage(props) {
         }}
       ></Month>
       <Modal isActive={activeModal != null} onShow={onDismiss}>
-        <h1>TEST H1 {activeModal}</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        {/* <EndVoteModal onClick={onDismiss} /> */}
+        <DayModal dayDate={activeModal}></DayModal>
+        {/* <HelpModal></HelpModal> */}
       </Modal>
     </>
   );

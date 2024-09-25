@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import EndVoteModal from "./EndVoteModal";
 import "./button.css";
 import "./modal.css";
 export default function Modal(props) {
@@ -9,10 +10,11 @@ export default function Modal(props) {
           <div onClick={props.onShow} className="overlay"></div>
           <div className="modal-content">
             {props.children}
-
-            <button className="close-modal" onClick={props.onShow}>
-              CLOSE
-            </button>
+            <div className="close-modal">
+              <button className="main" onClick={props.onShow}>
+                CLOSE
+              </button>
+            </div>
           </div>
         </div>
       )}
