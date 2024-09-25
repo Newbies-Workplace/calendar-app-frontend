@@ -1,0 +1,9 @@
+version: "3.4"
+
+services:
+  calendar-web:
+    image: ghcr.io/newbies-workplace/calendar-web:latest
+    restart: unless-stopped
+    container_name: calendar-web
+    ports:
+      - "80:8080"
