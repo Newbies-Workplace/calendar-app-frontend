@@ -60,9 +60,10 @@ function Month(props) {
                 }
                 onClick={() => {
                   props.dayClick(
+                    "day",
                     dayjs(
                       `${props.year}-${props.monthNumber}-${index + 1}`
-                    ).format("DD-MM-YYYY")
+                    ).format("YYYY-MM-DD")
                   );
                 }}
               />
