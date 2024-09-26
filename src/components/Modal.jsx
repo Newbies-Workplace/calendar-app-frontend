@@ -11,9 +11,7 @@ export default function Modal(props) {
           <div className="modal-content">
             {props.children}
             <div className="close-modal">
-              <button className="main" onClick={props.onShow}>
-                CLOSE
-              </button>
+              <button className="image close" onClick={props.onShow}></button>
             </div>
           </div>
         </div>

@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../App.css";
 import "../components/button.css";
+import { useNavigate } from "@tanstack/react-router";
 
-function Frontpage() {
+function Frontpage(props) {
   const today = new Date();
   const defaultValue = new Date(today).toISOString().split("T")[0];
   const tomorrow = today.setDate(today.getDate() + 1);
   const defaultValue2 = new Date(today).toISOString().split("T")[0];
   const datetimestr = `${defaultValue}T00:00`;
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -20,6 +21,7 @@ function Frontpage() {
 
   const onSubmit = (data) => {
     console.log(data);
+    navigate({ to: `/calendar/${data.name}` });
   };
 
   return (
@@ -63,7 +65,7 @@ function Frontpage() {
           name="event-vote-end"
           lang="pl"
           min={datetimestr}
-          {...register("voting_end")}
+          {...register("voting_end", { required: "Potrzebny czas" })}
         />
         <br></br>
         <label htmlFor="event-start">Początek terminów </label>
@@ -106,7 +108,9 @@ function Frontpage() {
         />
         <br></br>
         <br></br>
-        <button className="main primary">Submit</button>
+        <button className="main primary" href={`${props.id}`}>
+          Submit
+        </button>
       </form>
     </>
   );

@@ -36,7 +36,7 @@ function SecondPage(props) {
   const [activeModal, setActiveModal] = useState(null);
   const [modalDate, setModalDate] = useState(null);
   const [nameModal, setNameModal] = useState(true);
-
+  console.log(props.id);
   const click = (name, date) => {
     setModalDate(date);
     setActiveModal(name);
@@ -46,28 +46,7 @@ function SecondPage(props) {
   };
   return (
     <>
-      <Calendar
-        votelist={votelist}
-        onClick={(name, date) => {
-          click(name, date);
-        }}
-        start="2024-09-07"
-        end="2024-10-10"
-      ></Calendar>
-      <Modal isActive={activeModal != null} onShow={onDismiss}>
-        {activeModal === "end" && <EndVoteModal onClick={onDismiss} />}
-        {activeModal === "day" && (
-          <DayModal dayDate={modalDate} votelist={votelist}></DayModal>
-        )}
-        {activeModal === "help" && <HelpModal></HelpModal>}
-      </Modal>
-
-      {nameModal === true && (
-        <Modal isActive={NameModal}>
-          <NameModal onClick={() => setNameModal(false)}></NameModal>
-        </Modal>
-      )}
-      <button
+      {/* <button
         className="main"
         onClick={() => {
           click("help", null);
@@ -81,8 +60,33 @@ function SecondPage(props) {
           click("end", null);
         }}
       >
-        END
-      </button>
+        END VOTE
+      </button> */}
+      <Calendar
+        votelist={votelist}
+        onClick={(name, date) => {
+          click(name, date);
+        }}
+        start="2024-09-07"
+        end="2024-10-10"
+      ></Calendar>
+      <Modal isActive={activeModal != null} onShow={onDismiss}>
+        {activeModal === "end" && <EndVoteModal onClick={onDismiss} />}
+        {activeModal === "day" && (
+          <DayModal
+            dayDate={modalDate}
+            votelist={votelist}
+            onClick={(prop) => console.log(prop)}
+          ></DayModal>
+        )}
+        {activeModal === "help" && <HelpModal></HelpModal>}
+      </Modal>
+
+      {nameModal === true && (
+        <Modal isActive={NameModal}>
+          <NameModal onClick={() => setNameModal(false)}></NameModal>
+        </Modal>
+      )}
     </>
   );
 }
