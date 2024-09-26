@@ -9,7 +9,8 @@ const router = createRouter({ routeTree });
 function App() {
   return (
     <>
-      <SecondPage />;{/* <Frontpage /> */}
+      {/*<SecondPage />;*/}
+         <Frontpage />
       {/* <RouterProvider router={router} /> */}
     </>
   );

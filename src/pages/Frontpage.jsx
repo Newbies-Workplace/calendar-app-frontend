@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import "../App.css";
 import "../components/button.css";
 
+const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
+
 function Frontpage() {
   const today = new Date();
   const defaultValue = new Date(today).toISOString().split("T")[0];
@@ -19,7 +21,21 @@ function Frontpage() {
   const [second, setSecond] = useState("");
 
   const onSubmit = (data) => {
-    console.log(data);
+    const body = {
+      ...data,
+      owner: "test",
+    }
+
+    fetch(`${BACKEND_URL}/rest/events`, {
+      body: JSON.stringify(body),
+      headers: {
+          "Content-Type": "application/json",
+      },
+      method: "POST",
+    })
+        .then((response) => response.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
   };
 
   return (
