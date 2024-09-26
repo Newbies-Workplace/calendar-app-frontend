@@ -17,3 +17,15 @@
 .btext {
   color: #393941;
 }
+
+.textarea {
+  margin-bottom: 20px; /* Adjusts space after the input or textarea */
+  width: 100%;
+  padding: 10px;
+  height: 100px;
+}
+
+.textarea-container {
+  display: flex;
+  flex-direction: column;
+}

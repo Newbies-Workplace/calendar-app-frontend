@@ -6,6 +6,7 @@ import EndVoteModal from "../components/EndVoteModal.jsx";
 import DayModal from "../components/DayModal.jsx";
 import HelpModal from "../components/HelpModal.jsx";
 import { useState } from "react";
+import NameModal from "../components/NameModal.jsx";
 
 const votelist = [
   {
@@ -34,6 +35,8 @@ const votelist = [
 function SecondPage(props) {
   const [activeModal, setActiveModal] = useState(null);
   const [modalDate, setModalDate] = useState(null);
+  const [nameModal, setNameModal] = useState(true);
+
   const click = (name, date) => {
     setModalDate(date);
     setActiveModal(name);
@@ -58,6 +61,12 @@ function SecondPage(props) {
         )}
         {activeModal === "help" && <HelpModal></HelpModal>}
       </Modal>
+
+      {nameModal === true && (
+        <Modal isActive={NameModal}>
+          <NameModal onClick={() => setNameModal(false)}></NameModal>
+        </Modal>
+      )}
       <button
         className="main"
         onClick={() => {

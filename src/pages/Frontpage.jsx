@@ -30,7 +30,9 @@ function Frontpage() {
       </div>
 
       <form className="text-lg leading-tight" onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="event-name">Nazwa wydarzenia </label>
+        <label htmlFor="event-name" className="object-top">
+          Nazwa wydarzenia{" "}
+        </label>
         <input
           type="text"
           id="event-name"
@@ -44,21 +46,16 @@ function Frontpage() {
         ) : (
           <br></br>
         )}
-
+        <br />
         <label htmlFor="event-desc">Opis wydarzenia </label>
+
         <textarea
           id="event-desc"
           name="event-desc"
-          placeholder="Wpisz opis"
-          {...register("description", { required: "Potrzebny opis" })}
+          placeholder="Wpisz opis (opcjonalne)"
+          {...register("description")}
         />
-
-        {errors.description ? (
-          <div className="text-red-500 text-sm">Potrzebny opis</div>
-        ) : (
-          <br></br>
-        )}
-
+        <br />
         <label htmlFor="event-vote-end">Do kiedy otwarte głosowanie </label>
         <input
           type="datetime-local"
