@@ -11,18 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as EntrypageImport } from './routes/Entrypage'
-import { Route as CalpageImport } from './routes/Calpage'
+import { Route as IndexImport } from './routes/index'
+import { Route as CalendarIdImport } from './routes/calendar/$id'
 
 // Create/Update Routes
 
-const EntrypageRoute = EntrypageImport.update({
-  path: '/Entrypage',
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const CalpageRoute = CalpageImport.update({
-  path: '/Calpage',
+const CalendarIdRoute = CalendarIdImport.update({
+  path: '/calendar/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -30,18 +30,18 @@ const CalpageRoute = CalpageImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/Calpage': {
-      id: '/Calpage'
-      path: '/Calpage'
-      fullPath: '/Calpage'
-      preLoaderRoute: typeof CalpageImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/Entrypage': {
-      id: '/Entrypage'
-      path: '/Entrypage'
-      fullPath: '/Entrypage'
-      preLoaderRoute: typeof EntrypageImport
+    '/calendar/$id': {
+      id: '/calendar/$id'
+      path: '/calendar/$id'
+      fullPath: '/calendar/$id'
+      preLoaderRoute: typeof CalendarIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -50,38 +50,38 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  '/Calpage': typeof CalpageRoute
-  '/Entrypage': typeof EntrypageRoute
+  '/': typeof IndexRoute
+  '/calendar/$id': typeof CalendarIdRoute
 }
 
 export interface FileRoutesByTo {
-  '/Calpage': typeof CalpageRoute
-  '/Entrypage': typeof EntrypageRoute
+  '/': typeof IndexRoute
+  '/calendar/$id': typeof CalendarIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
-  '/Calpage': typeof CalpageRoute
-  '/Entrypage': typeof EntrypageRoute
+  '/': typeof IndexRoute
+  '/calendar/$id': typeof CalendarIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/Calpage' | '/Entrypage'
+  fullPaths: '/' | '/calendar/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/Calpage' | '/Entrypage'
-  id: '__root__' | '/Calpage' | '/Entrypage'
+  to: '/' | '/calendar/$id'
+  id: '__root__' | '/' | '/calendar/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  CalpageRoute: typeof CalpageRoute
-  EntrypageRoute: typeof EntrypageRoute
+  IndexRoute: typeof IndexRoute
+  CalendarIdRoute: typeof CalendarIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  CalpageRoute: CalpageRoute,
-  EntrypageRoute: EntrypageRoute,
+  IndexRoute: IndexRoute,
+  CalendarIdRoute: CalendarIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -96,15 +96,15 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.jsx",
       "children": [
-        "/Calpage",
-        "/Entrypage"
+        "/",
+        "/calendar/$id"
       ]
     },
-    "/Calpage": {
-      "filePath": "Calpage.jsx"
+    "/": {
+      "filePath": "index.jsx"
     },
-    "/Entrypage": {
-      "filePath": "Entrypage.jsx"
+    "/calendar/$id": {
+      "filePath": "calendar/$id.jsx"
     }
   }
 }
