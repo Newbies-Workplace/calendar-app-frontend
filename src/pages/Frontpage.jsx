@@ -38,7 +38,7 @@ function Frontpage(props) {
         .then((data) => {
             console.log(data)
 
-            navigate({ to: `/calendar/${data.event_id}` });
+            navigate({ to: `/calendar/${data.id}` });
         })
         .catch((error) => console.log(error));
   };
