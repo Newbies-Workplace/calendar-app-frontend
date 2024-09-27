@@ -1,16 +1,42 @@
 import Month from "../components/Month.jsx";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+dayjs.extend(duration);
 function Calendar(props) {
+  const startDate = dayjs(props.start);
+  const endDate = dayjs(props.end);
+
+  // Calculate the difference in months, accounting for year differences
   const repeats =
-    dayjs(`${props.start}`).format("MM") < dayjs(`${props.end}`).format("MM")
-      ? 2
-      : 1;
+    (endDate.year() - startDate.year()) * 12 +
+    (endDate.month() - startDate.month()) +
+    1;
+
   const start = dayjs(`${props.start}`).format("DD-MM-YYYY");
   const end = dayjs(`${props.end}`).format("DD-MM-YYYY");
+
   return (
     <>
-      {repeats === 1 && (
+      {[...Array(repeats)].map((_, i) => {
+        return (
+          <div key={i}>
+            <Month
+              year={dayjs(`${props.start}`).add(i, "month").format("YYYY")}
+              monthNumber={dayjs(`${props.start}`).add(i, "month").format("MM")}
+              start={dayjs(`${props.start}`).format("YYYY-MM-DD")}
+              end={dayjs(`${props.end}`).format("YYYY-MM-DD")}
+              info={props.votelist}
+              dayClick={(name, number) => {
+                props.onClick(name, number);
+              }}
+              cookieKey={props.cookieKey}
+            ></Month>
+          </div>
+        );
+      })}
+
+      {/* {repeats === 1 && (
         <div>
           <Month
             year={dayjs(`${props.start}`).format("YYYY")}
@@ -24,7 +50,7 @@ function Calendar(props) {
           ></Month>
         </div>
       )}
-      {repeats === 2 && (
+      {repeats && (
         <div>
           <Month
             year={dayjs(`${props.start}`).format("YYYY")}
@@ -48,7 +74,7 @@ function Calendar(props) {
             }}
           ></Month>
         </div>
-      )}
+      )} */}
     </>
   );
 }

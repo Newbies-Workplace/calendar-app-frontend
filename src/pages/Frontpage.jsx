@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import "../App.css";
 import "../components/button.css";
 import { useNavigate } from "@tanstack/react-router";
-
+import Cookies from "js-cookie";
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
 function Frontpage(props) {
@@ -25,22 +25,22 @@ function Frontpage(props) {
     const body = {
       ...data,
       owner: "test",
-    }
+    };
 
     fetch(`${BACKEND_URL}/rest/events`, {
       body: JSON.stringify(body),
       headers: {
-          "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       method: "POST",
     })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data)
+      .then((response) => response.json())
+      .then((data) => {
+        Cookies.set(data.id, JSON.stringify(data.owner));
 
-            navigate({ to: `/calendar/${data.id}` });
-        })
-        .catch((error) => console.log(error));
+        navigate({ to: `/calendar/${data.id}` });
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

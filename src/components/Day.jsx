@@ -1,6 +1,7 @@
 import "../App.css";
 import style from "./day.module.css";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 {
   /* 
 {
@@ -11,8 +12,16 @@ import { useEffect, useState } from "react";
 }
 function Day(props) {
   //console.log(JSON.stringify(props));
+
   const [backgroundColor, setBackgroundColor] = useState("bg-[#ebebec]");
-  const currentVote = props.votes.find((vote) => vote.isCurrentUserVote);
+
+  const cookie =
+    Cookies.get(props.cookieKey) !== undefined
+      ? JSON.parse(Cookies.get(props.cookieKey))
+      : {};
+  const currentVote = props.votes.find(
+    (vote) => vote.participant_id === cookie.participant_id
+  );
   const [visiblity, setVisibility] = useState("");
 
   useEffect(() => {
@@ -24,16 +33,15 @@ function Day(props) {
     if (props.votes.length <= 0) {
       return;
     }
-
     if (
       props.votes.every((vote) => {
-        return vote.status == true;
+        return vote.status == "AVAILABLE";
       })
     ) {
       setBackgroundColor("bg-green-400");
     } else if (
       props.votes.every((vote) => {
-        return vote.status == false;
+        return vote.status == "NOT_AVAILABLE";
       })
     ) {
       setBackgroundColor("bg-red-400");
@@ -52,15 +60,15 @@ function Day(props) {
         >
           <div className={style.circleRow}>
             <div
-              className={`w-[16px] h-[16px] rounded-full border border-black ${currentVote === undefined ? "bg-[#ebebec]" : currentVote.status ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
+              className={`w-[16px] h-[16px] rounded-full border border-black ${currentVote === undefined ? "bg-[#ebebec]" : currentVote.status === "AVAILABLE" ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
             />
 
             {props.votes.map((value, index) => {
-              if (!value.isCurrentUserVote)
+              if (value.participant_id != cookie.participant_id)
                 return (
                   <div
                     key={index}
-                    className={`w-[16px] h-[16px] rounded-full  border-black ${value.status ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
+                    className={`w-[16px] h-[16px] rounded-full  border-black ${value.status === "AVAILABLE" ? "bg-green-500" : "bg-red-500"} ${visiblity}`}
                   />
                 );
             })}

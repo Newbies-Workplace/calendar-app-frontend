@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 export default function DayModal(props) {
-  let currentVote = props.votelist.find(
+  let currentVotes = props.votelist?.filter(
     (vote) =>
-      dayjs(vote.dayNumber).format("YYYY-MM-DD") ===
+      dayjs(vote.day).format("YYYY-MM-DD") ===
       dayjs(props.dayDate).format("YYYY-MM-DD")
-  );
-  currentVote = currentVote || { votes: [] };
+  ) || { votes: [] };
+  useEffect(() => {
+    console.log(currentVotes);
+    currentVotes = props.votelist?.filter(
+      (vote) =>
+        dayjs(vote.day).format("YYYY-MM-DD") ===
+        dayjs(props.dayDate).format("YYYY-MM-DD")
+    ) || { votes: [] };
+  }, [props]);
+  console.log("test", props.participants);
   return (
     <>
       <div className="text-center bg-white  p-5 rounded-[10px]">
@@ -18,15 +26,20 @@ export default function DayModal(props) {
           Dostępni
         </div>
         <div className="flex justify-center flex-wrap gap-2.5 mb-2.5">
-          {currentVote.votes.length > 0 ? (
-            currentVote.votes.map((vote, index) => {
-              if (vote.status) {
+          {currentVotes.length > 0 ? (
+            currentVotes.map((vote, index) => {
+              if (vote.status === "AVAILABLE") {
                 return (
                   <div
                     key={index}
                     className="inline-flex items-center bg-[#f2f2f2] text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent bg-[#e6ffe6] border-[#28a745] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#28a745] before:mr-2 before:rounded-[50%]"
                   >
-                    {vote.name}
+                    {
+                      props.participants.find(
+                        (participant) =>
+                          participant.participant_id === vote.participant_id
+                      )?.name
+                    }
                   </div>
                 );
               }
@@ -38,15 +51,20 @@ export default function DayModal(props) {
         </div>
         <div className="modal-section-title">Niedostępni</div>
         <div className="flex justify-center flex-wrap gap-2.5 mb-2.5">
-          {currentVote.votes.length > 0 ? (
-            currentVote.votes.map((vote, index) => {
-              if (!vote.status) {
+          {currentVotes.length > 0 ? (
+            currentVotes.map((vote, index) => {
+              if (vote.status === "NOT_AVAILABLE") {
                 return (
                   <div
                     key={index}
                     className="inline-flex items-center bg-[#f2f2f2] text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent     bg-[#ffe6e6] border-[#dc3545] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#dc3545] before:mr-2 before:rounded-[50%]"
                   >
-                    {vote.name}
+                    {
+                      props.participants.find(
+                        (participant) =>
+                          participant.participant_id === vote.participant_id
+                      )?.name
+                    }
                   </div>
                 );
               }
@@ -57,10 +75,16 @@ export default function DayModal(props) {
           )}
         </div>
         <div className="text-white">
-          <button className="main" onClick={() => props.onClick("yes")}>
+          <button
+            className="main"
+            onClick={() => props.onClick(props.dayDate, true)}
+          >
             Jestem dostępny
           </button>{" "}
-          <button className="main" onClick={() => props.onClick("no")}>
+          <button
+            className="main"
+            onClick={() => props.onClick(props.dayDate, false)}
+          >
             Jestem niedostępny
           </button>
         </div>

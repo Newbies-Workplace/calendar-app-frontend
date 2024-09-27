@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 export default function NameModal(props) {
   const {
     register,
@@ -8,7 +9,20 @@ export default function NameModal(props) {
 
   const onSubmit = (data) => {
     console.log(data);
-    props.onClick();
+
+    fetch(`${BACKEND_URL}/rest/events/${props.eventId}/participants`, {
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        props.onSubmit(data);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (

@@ -2,7 +2,8 @@ import "../App.css";
 import dayjs from "dayjs";
 import Day from "./Day.jsx";
 import { useEffect, useState } from "react";
-
+import isBetween from "dayjs/plugin/isBetween";
+dayjs.extend(isBetween);
 function Month(props) {
   const daysInMonth = dayjs(`${props.year}-${props.monthNumber}`).daysInMonth();
   const startDayOfWeekDayJs = dayjs(
@@ -20,8 +21,18 @@ function Month(props) {
     { length: startDayOfWeek },
     (_, index) => index + 1
   );
-  const voteBeginDate = parseInt(dayjs(`${props.start}`).format("DD"));
-  const voteEndDate = dayjs(`${props.end}`).format("DD");
+  const voteBeginDate = !dayjs(`${props.start}`).isSame(
+    `${props.year}-${props.monthNumber}`,
+    "month"
+  )
+    ? 1
+    : parseInt(dayjs(`${props.start}`).format("DD"));
+  const voteEndDate = !dayjs(`${props.start}`).isSame(
+    `${props.year}-${props.monthNumber}`,
+    "month"
+  )
+    ? daysInMonth
+    : parseInt(dayjs(`${props.end}`).endOf("month").format("DD"));
   return (
     <>
       <div className="flex flex-col items-center w-[700px]">
@@ -45,18 +56,22 @@ function Month(props) {
           {daysArray.map((day, index) => {
             const formattedMonth = String(props.monthNumber).padStart(2, "0");
             const formattedDay = String(index + 1).padStart(2, "0");
-            const votefound = props.info.find(
-              (vote) =>
-                vote.dayNumber ===
-                `${props.year}-${formattedMonth}-${formattedDay}`
+            const votefound = props.info.filter((vote) =>
+              dayjs(`${props.year}-${formattedMonth}-${formattedDay}`).isSame(
+                vote.day,
+                "day"
+              )
             );
             return (
               <Day
                 key={index}
-                votes={votefound === undefined ? [] : votefound.votes}
+                votes={votefound}
                 dayNumber={index + 1}
+                cookieKey={props.cookieKey}
                 hidden={
-                  index + 1 < voteBeginDate || index + 1 > parseInt(voteEndDate)
+                  !dayjs(
+                    `${props.year}-${props.monthNumber}-${index + 1}`
+                  ).isBetween(`${props.start}`, `${props.end}`, "day", "[]")
                 }
                 onClick={() => {
                   props.dayClick(
