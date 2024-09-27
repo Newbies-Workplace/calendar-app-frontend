@@ -33,13 +33,12 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/newbies-workplace/calendar-web
 
-#      - name: "web: Create .env"
-#        uses: iamsauravsharma/create-dotenv@v1.2.2
-#        with:
-#          file-name: '.env'
-#        env:
-#          RETRO_WEB_API_URL: ${{ secrets.RETRO_WEB_API_URL }}
-#          RETRO_WEB_SOCKET_URL: ${{ secrets.RETRO_WEB_SOCKET_URL }}
+      - name: "web: Create .env"
+        uses: iamsauravsharma/create-dotenv@v1.2.2
+        with:
+          file-name: '.env'
+        env:
+          CALENDAR_BACKEND_URL: https://calendar.newbies.pl/api
 
       - name: "web: Build and push Docker image"
         uses: docker/build-push-action@v3

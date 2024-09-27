@@ -1,5 +1,7 @@
 FROM node:18.16.0 AS builder
 
+ARG CALENDAR_BACKEND_URL
+
 WORKDIR /build
 COPY . ./
 
