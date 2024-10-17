@@ -13,31 +13,16 @@ function Frontpage(props) {
   const defaultValue2 = new Date(today).toISOString().split("T")[0];
   const datetimestr = `${defaultValue}T00:00`;
   const navigate = useNavigate();
-  const [owner, setOwner] = useState("");
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  
+  // React Hook Form setup
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
 
   const onSubmit = (data) => {
     const body = {
-      ...data,
-      owner: owner,
+      ...data,  // Wszystkie dane, w tym owner z formularza
     };
-    fetch(`${BACKEND_URL}/rest/events`, {
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        Cookies.set(data.id, JSON.stringify(data.owner));
-      });
 
     fetch(`${BACKEND_URL}/rest/events`, {
       body: JSON.stringify(body),
@@ -116,7 +101,6 @@ function Frontpage(props) {
 
         {errors.start ? (
           <div className="text-red-500 text-sm">
-            {" "}
             Pierwsza data musi być przed drugą
           </div>
         ) : (
@@ -138,17 +122,19 @@ function Frontpage(props) {
         />
         <br></br>
         <br></br>
+
+        {/* Dodaj istniejący przycisk "Submit" */}
         <button className="main primary" href={`${props.id}`}>
           Submit
         </button>
-        <label>Owner</label>
-  <input
-    type="text"
-    value={owner}
-    onChange={(e) => setOwner(e.target.value)}
-    placeholder="Enter owner name"
-  />
 
+        {/* Nowy input dla ownera */}
+        <label>Owner</label>
+        <input
+          {...register("owner", { required: true })}
+          placeholder="Enter owner name"
+        />
+        {errors.owner && <div className="text-red-500 text-sm">Owner is required</div>}
       </form>
     </>
   );
