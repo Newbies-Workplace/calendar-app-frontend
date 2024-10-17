@@ -13,6 +13,7 @@ function Frontpage(props) {
   const defaultValue2 = new Date(today).toISOString().split("T")[0];
   const datetimestr = `${defaultValue}T00:00`;
   const navigate = useNavigate();
+  const [owner, setOwner] = useState("");
   const {
     register,
     handleSubmit,
@@ -24,8 +25,19 @@ function Frontpage(props) {
   const onSubmit = (data) => {
     const body = {
       ...data,
-      owner: "test",
+      owner: owner,
     };
+    fetch(`${BACKEND_URL}/rest/events`, {
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        Cookies.set(data.id, JSON.stringify(data.owner));
+      });
 
     fetch(`${BACKEND_URL}/rest/events`, {
       body: JSON.stringify(body),
@@ -61,7 +73,6 @@ function Frontpage(props) {
           placeholder="Wpisz nazwę"
           {...register("name", { required: "Potrzebnę imię" })}
         />
-
         {errors.name ? (
           <div className="text-red-500 text-sm">Potrzebna nazwa</div>
         ) : (
@@ -130,6 +141,14 @@ function Frontpage(props) {
         <button className="main primary" href={`${props.id}`}>
           Submit
         </button>
+        <label>Owner</label>
+  <input
+    type="text"
+    value={owner}
+    onChange={(e) => setOwner(e.target.value)}
+    placeholder="Enter owner name"
+  />
+
       </form>
     </>
   );
