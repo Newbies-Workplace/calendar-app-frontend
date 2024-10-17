@@ -1,6 +1,6 @@
 import "../App.css";
 import dayjs from "dayjs";
-import Day from "./Day.jsx";
+import Day from "./Day.tsx";
 import { useEffect, useState } from "react";
 import isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);

@@ -1,6 +1,15 @@
 
+:root {
+    --available-bg: #28a745;
+    --not-available-bg: #dc3545;
+    --mixed-bg: #ffc107;
+    --hidden-bg: rgba(128, 128, 128, 0.5);
+    --default-bg: #ebebec;
+    --active-bg: #ffffff;
+  }
+
 .day {
-    background-color: #ebebec;
+    background-color: var(--bg-default);
     display: block;
     width: 100px; /*zmien pozniej*/
     height: 100px;
@@ -13,8 +22,28 @@
     align-items: flex-start;
     position: relative;
     padding: 8px;
-    
 }
+
+.bgAvailable {
+    background-color: var(--available-bg);
+  }
+  
+  .bgNotAvailable {
+    background-color: var(--not-available-bg);
+  }
+  
+  .bgMixed {
+    background-color: var(--mixed-bg);
+  }
+  
+  .bgHidden {
+    background-color: var(--hidden-bg);
+  }
+
+  .bgActive {
+    background-color: var(--active-bg);
+  }
+
 .number {
     position: absolute;
     bottom: 7px;
@@ -49,4 +78,12 @@
     border-radius: 50%;
     border: 1px solid #000;
 }
+
+.circle.available {
+    background-color: var(--available-color);
+  }
+  
+  .circle.not-available {
+    background-color: var(--not-available-color);
+  }
 
