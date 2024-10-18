@@ -13,18 +13,14 @@ function Frontpage(props) {
   const defaultValue2 = new Date(today).toISOString().split("T")[0];
   const datetimestr = `${defaultValue}T00:00`;
   const navigate = useNavigate();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
 
   const onSubmit = (data) => {
     const body = {
       ...data,
-      owner: "test",
     };
 
     fetch(`${BACKEND_URL}/rest/events`, {
@@ -61,7 +57,6 @@ function Frontpage(props) {
           placeholder="Wpisz nazwę"
           {...register("name", { required: "Potrzebnę imię" })}
         />
-
         {errors.name ? (
           <div className="text-red-500 text-sm">Potrzebna nazwa</div>
         ) : (
@@ -105,7 +100,6 @@ function Frontpage(props) {
 
         {errors.start ? (
           <div className="text-red-500 text-sm">
-            {" "}
             Pierwsza data musi być przed drugą
           </div>
         ) : (
@@ -127,8 +121,16 @@ function Frontpage(props) {
         />
         <br></br>
         <br></br>
+
+
+        <label>Właściciel</label>
+        <input
+          {...register("owner", { required: true })}
+          placeholder="Wpisz imię właściciela"
+        />
+        {errors.owner && <div className="text-red-500 text-sm">Właściciel jest wymagany</div>}
         <button className="main primary" href={`${props.id}`}>
-          Submit
+          Potwierdź
         </button>
       </form>
     </>
