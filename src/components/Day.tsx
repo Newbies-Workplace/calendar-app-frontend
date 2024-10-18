@@ -3,14 +3,6 @@ import style from "./day.module.css";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import React from "react";
-{
-  /* 
-{
-    dayNumber: string;  
-    votes: [status,isCurrentUserVote,];
-} 
-*/
-}
 
 interface Vote{
   participant_id: string;
@@ -87,37 +79,3 @@ const Day: React.FC<DayProps> = ({ votes, dayNumber, cookieKey, hidden, onClick 
 }
 
 export default Day;
-
-/* 
-<Day
-        dayNumber="1"
-        votes={[
-          { status: true, isCurrentUserVote: true },
-          { status: true, isCurrentUserVote: false },
-        ]}
-        onClick={() => {
-          click("1");
-        }}
-      />
-      <Day
-        dayNumber="2"
-        votes={[
-          { status: false, isCurrentUserVote: true },
-          { status: false, isCurrentUserVote: false },
-        ]}
-        onClick={() => {
-          click("2");
-        }}
-      />
-      <Day
-        dayNumber="3"
-        hidden={false}
-        votes={[
-          { status: true, isCurrentUserVote: true },
-          { status: false, isCurrentUserVote: false },
-        ]}
-        onClick={() => {
-          click("3");
-        }}
-      />
-      <Day dayNumber="4" votes={[]} hidden /> */
