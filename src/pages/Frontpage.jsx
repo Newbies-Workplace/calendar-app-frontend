@@ -14,14 +14,13 @@ function Frontpage(props) {
   const datetimestr = `${defaultValue}T00:00`;
   const navigate = useNavigate();
   
-  // React Hook Form setup
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [first, setFirst] = useState("");
   const [second, setSecond] = useState("");
 
   const onSubmit = (data) => {
     const body = {
-      ...data,  // Wszystkie dane, w tym owner z formularza
+      ...data,
     };
 
     fetch(`${BACKEND_URL}/rest/events`, {
@@ -123,18 +122,16 @@ function Frontpage(props) {
         <br></br>
         <br></br>
 
-        {/* Dodaj istniejący przycisk "Submit" */}
-        <button className="main primary" href={`${props.id}`}>
-          Submit
-        </button>
 
-        {/* Nowy input dla ownera */}
-        <label>Owner</label>
+        <label>Właściciel</label>
         <input
           {...register("owner", { required: true })}
-          placeholder="Enter owner name"
+          placeholder="Wpisz imię właściciela"
         />
-        {errors.owner && <div className="text-red-500 text-sm">Owner is required</div>}
+        {errors.owner && <div className="text-red-500 text-sm">Właściciel jest wymagany</div>}
+        <button className="main primary" href={`${props.id}`}>
+          Potwierdź
+        </button>
       </form>
     </>
   );
