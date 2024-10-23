@@ -1,5 +1,5 @@
 import "../App.css";
-import Calendar from "../components/Calendar.jsx";
+import Calendar from "../components/Calendar.tsx";
 import Modal from "../components/Modal.jsx";
 import "../components/button.css";
 import EndVoteModal from "../components/EndVoteModal.jsx";
@@ -9,30 +9,9 @@ import { useState, useEffect } from "react";
 import NameModal from "../components/NameModal.jsx";
 import Cookies from "js-cookie";
 import dayjs from "dayjs";
+import { Helmet } from 'react-helmet';
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
-// const votelist = [
-//   {
-//     dayNumber: "2024-09-17",
-//     votes: [
-//       { status: false, isCurrentUserVote: true, name: "flo" },
-//       { status: false, isCurrentUserVote: false, name: "owy" },
-//     ],
-//   },
-//   {
-//     dayNumber: "2024-09-15",
-//     votes: [
-//       { status: true, isCurrentUserVote: true, name: "flo" },
-//       { status: false, isCurrentUserVote: false, name: "owy" },
-//     ],
-//   },
-//   {
-//     dayNumber: "2024-10-02",
-//     votes: [
-//       { status: true, isCurrentUserVote: true, name: "flo" },
-//       { status: true, isCurrentUserVote: false, name: "owy" },
-//     ],
-//   },
-// ];
+
 
 function SecondPage(props) {
   const nameCookieKey = `${props.id}`;
@@ -63,7 +42,6 @@ function SecondPage(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data);
         setEvent(data);
       })
       .catch((error) => console.log(error));
@@ -136,23 +114,9 @@ function SecondPage(props) {
   };
   return (
     <>
-      {/* <h1>{cookieName}</h1> */}
-      {/* <button
-        className="main"
-        onClick={() => {
-          click("help", null);
-        }}
-      >
-        HELP
-      </button>
-      <button
-        className="main"
-        onClick={() => {
-          click("end", null);
-        }}
-      >
-        END VOTE
-      </button> */}
+ 
+ 
+
       {event != undefined && (
         <Calendar
           votelist={votelist}
@@ -163,7 +127,18 @@ function SecondPage(props) {
           end={event.end}
           cookieKey={nameCookieKey}
         ></Calendar>
-      )}
+      )
+      }
+      {event != undefined && (
+        <Helmet>
+        <meta property="og:title" content={event.name} />
+        <meta property="og:description" content={event.description} />
+        <title>{event.name}</title>
+      </Helmet>
+      )
+      }
+      
+
       <Modal isActive={activeModal != null} onShow={onDismiss}>
         {activeModal === "end" && <EndVoteModal onClick={onDismiss} />}
         {activeModal === "day" && (
