@@ -3,7 +3,7 @@ import style from "./day.module.css";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import React from "react";
-import { Vote } from "./Vote";
+import { Vote } from "../types/Vote";
 
 
 

@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { Helmet } from 'react-helmet';
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
+
 function SecondPage(props) {
   const nameCookieKey = `${props.id}`;
   // Cookies.get(nameCookieKey) === undefined && Cookies.set(nameCookieKey, true);
@@ -20,7 +21,6 @@ function SecondPage(props) {
   const [modalDate, setModalDate] = useState(null);
   const [nameModal, setNameModal] = useState(cookieName === undefined);
   const [event, setEvent] = useState();
-  const [eventDetails, setEventDetails] = useState([]);
   const [votelist, setVotelist] = useState([]);
   const [participants, setParticipants] = useState([]);
   const dayM = (name, date) => {
@@ -42,7 +42,6 @@ function SecondPage(props) {
     })
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data);
         setEvent(data);
       })
       .catch((error) => console.log(error));
@@ -59,14 +58,6 @@ function SecondPage(props) {
         setVotelist(data);
       })
       .catch((error) => console.log(error));
-
-    fetch(`${BACKEND_URL}/rest/events/${props.id}/details`)
-      .then(response => response.json())
-      .then(data => {
-          //console.log('Event details:', data);
-          setEventDetails(data);
-      })
-      .catch(error => console.error(error));
 
     fetch(`${BACKEND_URL}/rest/events/${props.id}/participants`, {
       headers: {
@@ -123,17 +114,8 @@ function SecondPage(props) {
   };
   return (
     <>
-      <div>
-        <Helmet>
-          <meta property="og:title" content={eventDetails.name} />
-          <meta property="og:description" content={eventDetails.description} />
-          <meta property="og:image" content="https://example.com/event-image.jpg" />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content={`https://twoja-aplikacja.com/events/${eventDetails.event_id}`} />
-          <meta property="og:site_name" content="CIEKAWE CZY DZIAŁA" />
-          <title>{props.name}</title>
-        </Helmet>
-      </div>
+ 
+ 
 
       {event != undefined && (
         <Calendar
@@ -145,7 +127,18 @@ function SecondPage(props) {
           end={event.end}
           cookieKey={nameCookieKey}
         ></Calendar>
-      )}
+      )
+      }
+      {event != undefined && (
+        <Helmet>
+        <meta property="og:title" content={event.name} />
+        <meta property="og:description" content={event.description} />
+        <title>{event.name}</title>
+      </Helmet>
+      )
+      }
+      
+
       <Modal isActive={activeModal != null} onShow={onDismiss}>
         {activeModal === "end" && <EndVoteModal onClick={onDismiss} />}
         {activeModal === "day" && (

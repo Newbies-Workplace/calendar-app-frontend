@@ -4,15 +4,15 @@ import Day from "./Day";
 import { useEffect, useState } from "react";
 import isBetween from "dayjs/plugin/isBetween";
 import React from "react";
-import { Vote } from "./Vote";
+import { Vote } from "../types/Vote";
 dayjs.extend(isBetween);
 
 interface MonthProps {
   year: number;
   monthNumber: number;
-  start: string;
-  end: string;
-  info: Vote[];
+  voting_start: string;
+  voting_end: string;
+  votes: Vote[];
   cookieKey: string;
   dayClick: (type: string, date: string) => void;
 }
@@ -20,9 +20,9 @@ interface MonthProps {
 function Month({
   year,
   monthNumber,
-  start,
-  end,
-  info,
+  voting_start,
+  voting_end,
+  votes,
   dayClick,
   cookieKey,
 }: MonthProps) {
@@ -52,7 +52,8 @@ function Month({
         {daysArray.map((day, index) => {
           const formattedMonth = String(monthNumber).padStart(2, "0");
           const formattedDay = String(index + 1).padStart(2, "0");
-          const votefound = info.filter((vote) =>
+          
+          const votefound = votes.filter((vote) =>
             dayjs(`${year}-${formattedMonth}-${formattedDay}`).isSame(vote.day, "day")
           );
           return (
@@ -62,7 +63,7 @@ function Month({
               dayNumber={index + 1}
               cookieKey={cookieKey}
               hidden={
-                !dayjs(`${year}-${monthNumber}-${index + 1}`).isBetween(start, end, "day", "[]")
+                !dayjs(`${year}-${monthNumber}-${index + 1}`).isBetween(voting_start, voting_end, "day", "[]")
               }
               onClick={() => {
                 dayClick("day", dayjs(`${year}-${monthNumber}-${index + 1}`).format("YYYY-MM-DD"));

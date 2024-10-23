@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import React from "react";
-import { Vote } from "./Vote.js";
+import { Vote } from "../types/Vote.js";
 dayjs.extend(duration);
 
 
@@ -32,9 +32,9 @@ function Calendar({ start, end, votelist, cookieKey, onClick }: CalendarProps) {
           <Month
             year={parseInt(dayjs(start).add(i, "month").format("YYYY"), 10)}
             monthNumber={parseInt(dayjs(start).add(i, "month").format("MM"), 10)}
-            start={dayjs(start).format("YYYY-MM-DD")}
-            end={dayjs(end).format("YYYY-MM-DD")}
-            info={votelist}
+            voting_start={dayjs(start).format("YYYY-MM-DD")}
+            voting_end={dayjs(end).format("YYYY-MM-DD")}
+            votes={votelist}
             dayClick={(name, date) => {
               onClick(name, date);
             }}
