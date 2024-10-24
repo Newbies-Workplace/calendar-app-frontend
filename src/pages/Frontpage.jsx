@@ -4,6 +4,7 @@ import "../App.css";
 import "../components/button.css";
 import { useNavigate } from "@tanstack/react-router";
 import Cookies from "js-cookie";
+import Button from "../components/Button";
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
 function Frontpage(props) {
@@ -120,7 +121,6 @@ function Frontpage(props) {
           })}
         />
         <br></br>
-        <br></br>
 
 
         <label>Właściciel</label>
@@ -129,9 +129,14 @@ function Frontpage(props) {
           placeholder="Wpisz imię właściciela"
         />
         {errors.owner && <div className="text-red-500 text-sm">Właściciel jest wymagany</div>}
-        <button className="main primary" href={`${props.id}`}>
-          Potwierdź
-        </button>
+        <br></br>
+        <br></br>
+        <Button
+      className="p-8"
+        size="md"
+        color="bg-slate-500"
+        variant="filled"
+        >zapisz</Button>
       </form>
     </>
   );
