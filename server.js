@@ -16,6 +16,12 @@ const port = process.env.SERVER_PORT || 8080;
 app.use(express.static(publicDir));
 app.use(fallback(path.join(publicDir, "index.html")));
 
+app.use(
+  require("prerender-node").set("prerenderToken", [K0NREsM5STHeIKCtFnsU])
+  );
+
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
+
+
 });
