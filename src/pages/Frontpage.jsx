@@ -128,7 +128,7 @@ function Frontpage(props) {
           {...register("owner", { required: true })}
           placeholder="Wpisz imię właściciela"
         />
-        {errors.owner && <div className="text-red-500 text-sm">Właściciel jest wymagany</div>}
+        {errors.owner && <div className="text-red-500 text-sm">Właściciel jest wymagany </div>}
         <br></br>
         <br></br>
         <Button
