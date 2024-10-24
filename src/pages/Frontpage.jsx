@@ -123,7 +123,7 @@ function Frontpage(props) {
         <br></br>
 
 
-        <label>Właściciel</label>
+        <label>Właściciel </label>
         <input
           {...register("owner", { required: true })}
           placeholder="Wpisz imię właściciela"
@@ -132,10 +132,9 @@ function Frontpage(props) {
         <br></br>
         <br></br>
         <Button
-      className="p-8"
+      className="p-3"
         size="md"
-        color="bg-slate-500"
-        variant="filled"
+        variant="outlined"
         >zapisz</Button>
       </form>
     </>
