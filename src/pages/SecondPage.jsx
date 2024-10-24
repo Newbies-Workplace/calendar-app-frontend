@@ -129,14 +129,14 @@ function SecondPage(props) {
         ></Calendar>
       )
       }
+      
       {event != undefined && (
         <Helmet>
         <meta property="og:title" content={event.name} />
         <meta property="og:description" content={event.description} />
         <title>{event.name}</title>
       </Helmet>
-      )
-      }
+      )}
       
 
       <Modal isActive={activeModal != null} onShow={onDismiss}>
