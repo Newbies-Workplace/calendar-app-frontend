@@ -11,11 +11,18 @@ const app = express();
 // config stuff
 const publicDir = path.join(_dirname, "dist");
 const port = process.env.SERVER_PORT || 8080;
+const token = process.env.PRERENDER_TOKEN
 
 // fallback to index.html
 app.use(express.static(publicDir));
 app.use(fallback(path.join(publicDir, "index.html")));
 
+app.use(
+  require("prerender-node").set("prerenderToken", [token])
+  );
+
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
+
+
 });
