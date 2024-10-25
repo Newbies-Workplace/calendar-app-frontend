@@ -132,7 +132,6 @@ function Frontpage(props) {
         <br></br>
         <br></br>
         <Button
-      className="p-3 transition ease-in-out duration-500 font-semibold rounded-xl"
         >zapisz</Button>
       </form>
     </>
