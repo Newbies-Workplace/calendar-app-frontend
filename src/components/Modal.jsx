@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import EndVoteModal from "./EndVoteModal";
-import "./button.css";
 import "./modal.css";
 export default function Modal(props) {
   return (
@@ -11,7 +10,7 @@ export default function Modal(props) {
           <div className="modal-content">
             {props.children}
             <div className="close-modal">
-              <button className="image close" onClick={props.onShow}></button>
+              <Button className="image close" onClick={props.onShow}></Button>
             </div>
           </div>
         </div>

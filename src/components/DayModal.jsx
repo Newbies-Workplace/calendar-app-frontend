@@ -32,7 +32,7 @@ export default function DayModal(props) {
                 return (
                   <div
                     key={index}
-                    className="inline-flex items-center bg-[#f2f2f2] text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent bg-[#e6ffe6] border-[#28a745] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#28a745] before:mr-2 before:rounded-[50%]"
+                    className="inline-flex items-center bg-[#f2f2f2] text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent bg-[#e6ffe6 border-[#28a745] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#28a745] before:mr-2 before:rounded-[50%]"
                   >
                     {
                       props.participants.find(
@@ -57,7 +57,7 @@ export default function DayModal(props) {
                 return (
                   <div
                     key={index}
-                    className="inline-flex items-center bg-[#f2f2f2] text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent     bg-[#ffe6e6] border-[#dc3545] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#dc3545] before:mr-2 before:rounded-[50%]"
+                    className="inline-flex items-center bg-#f2f2f2 text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent     bg-[#ffe6e6] border-[#dc3545] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#dc3545] before:mr-2 before:rounded-[50%]"
                   >
                     {
                       props.participants.find(
@@ -75,18 +75,18 @@ export default function DayModal(props) {
           )}
         </div>
         <div className="text-white">
-          <button
+          <Button
             className="main"
             onClick={() => props.onClick(props.dayDate, true)}
           >
             Jestem dostępny
-          </button>{" "}
-          <button
+          </Button>{" "}
+          <Button
             className="main"
             onClick={() => props.onClick(props.dayDate, false)}
           >
             Jestem niedostępny
-          </button>
+          </Button>
         </div>
       </div>
     </>

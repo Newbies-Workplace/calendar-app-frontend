@@ -11,7 +11,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ children, onClick, variant = "outlined", size = "md", className}) => {
   return (
-    <button onClick={onClick}
+    <Button onClick={onClick}
     className={cn(
     "transition ease-in-out duration-200 font-semibold rounded-xl",
       size === "md" && "p-2 text-base",
@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({ children, onClick, variant = "outlined"
       className
      )}>
      {children}
-    </button>
+    </Button>
   );
 };
 export default Button;

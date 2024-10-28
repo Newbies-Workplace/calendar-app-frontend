@@ -1,7 +1,6 @@
 import "../App.css";
 import Calendar from "../components/Calendar.tsx";
 import Modal from "../components/Modal.jsx";
-import "../components/button.css";
 import EndVoteModal from "../components/EndVoteModal.jsx";
 import DayModal from "../components/DayModal.jsx";
 import HelpModal from "../components/HelpModal.jsx";

@@ -45,7 +45,7 @@ export default function NameModal(props) {
           <br></br>
         )}
         <br></br>
-        <button className="main primary ">Submit</button>
+        <Button className="main primary ">Submit</Button>
       </form>
     </>
   );
