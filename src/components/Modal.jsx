@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EndVoteModal from "./EndVoteModal";
 import "./modal.css";
+import Button from "./Button.tsx";
 export default function Modal(props) {
   return (
     <>

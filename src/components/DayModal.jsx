@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import Button from "./Button.tsx";
 export default function DayModal(props) {
   let currentVotes = props.votelist?.filter(
     (vote) =>

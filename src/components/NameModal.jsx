@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import Button from "./Button.tsx";
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 export default function NameModal(props) {
   const {
