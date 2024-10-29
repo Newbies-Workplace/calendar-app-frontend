@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import "../App.css";
-import "../components/button.css";
 import { useNavigate } from "@tanstack/react-router";
 import Cookies from "js-cookie";
 import Button from "../components/Button";
