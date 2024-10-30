@@ -2,6 +2,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
 import fallback from "express-history-api-fallback";
+import prerender from "prerender-node";
 
 const __filename = fileURLToPath(import.meta.url);
 const _dirname = path.dirname(__filename);
@@ -18,11 +19,9 @@ app.use(express.static(publicDir));
 app.use(fallback(path.join(publicDir, "index.html")));
 
 app.use(
-  require("prerender-node").set("prerenderToken", [token])
-  );
+  prerender.set("prerenderToken", [token])
+);
 
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
-
-
 });
