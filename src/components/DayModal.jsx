@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import Button from "./Button.tsx";
 export default function DayModal(props) {
   let currentVotes = props.votelist?.filter(
     (vote) =>
@@ -33,7 +34,7 @@ export default function DayModal(props) {
                   <div
                     key={index}
                     className="inline-flex items-center bg-[#f2f2f2] text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent bg-[#e6ffe6] border-[#28a745] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#28a745] before:mr-2 before:rounded-[50%]"
-                  >
+                     >
                     {
                       props.participants.find(
                         (participant) =>
@@ -75,18 +76,18 @@ export default function DayModal(props) {
           )}
         </div>
         <div className="text-white">
-          <button
+          <Button
             className="main"
             onClick={() => props.onClick(props.dayDate, true)}
           >
             Jestem dostępny
-          </button>{" "}
-          <button
+          </Button>{" "}
+          <Button
             className="main"
             onClick={() => props.onClick(props.dayDate, false)}
           >
             Jestem niedostępny
-          </button>
+          </Button>
         </div>
       </div>
     </>
