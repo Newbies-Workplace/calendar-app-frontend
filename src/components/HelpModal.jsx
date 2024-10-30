@@ -1,14 +1,18 @@
+import Button from '../components/Button.tsx';
+
 export default function HelpModal(props) {
   return (
     <>
       <br />
-      <h1>Pomoc</h1>
       <br />
-      <div className="text-left">
-        Tekst pomocy. Jak potrzebujesz pomocy to tu się wyświetla. <br /> <br />
-        Tutaj więcej tekstu <br /> <br />
-        Jeszcze więcej wyjaśnień
+      <div>
+      <h1 style={{color: 'black'}}>Pomoc</h1>
+      <h2 style={{color: 'black'}}>Tekst pomocy. Jak potrzebujesz pomocy to tu się wyświetla</h2>
+      <h3 style={{color: 'black'}}>Tutaj więcej tekstu</h3>
+      <h4 style={{color: 'black'}}>Jeszcze więcej wyjaśnień</h4>
+      <div className="text-left" style={{color: "black"}}></div>
       </div>
+      <Button onClick={props.onClose}>Zamknij</Button>
     </>
   );
 }

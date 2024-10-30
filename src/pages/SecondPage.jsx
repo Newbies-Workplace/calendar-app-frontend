@@ -4,6 +4,7 @@ import Modal from "../components/Modal.jsx";
 import EndVoteModal from "../components/EndVoteModal.jsx";
 import DayModal from "../components/DayModal.jsx";
 import HelpModal from "../components/HelpModal.jsx";
+import Toolbar from "../components/Toolbar.jsx";
 import { useState, useEffect } from "react";
 import NameModal from "../components/NameModal.jsx";
 import Cookies from "js-cookie";
@@ -113,6 +114,7 @@ function SecondPage(props) {
   };
   return (
     <>
+     <Toolbar />
  
  
 
