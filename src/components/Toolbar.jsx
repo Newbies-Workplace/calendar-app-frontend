@@ -23,65 +23,35 @@ const Toolbar = () => {
       });
   };
 
-  const toolbarStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '8px 12px',
-    backgroundColor: '#f5f7fa',
-    borderRadius: '12px',
-    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
-  };
-
-  const buttonStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '36px',
-    height: '36px',
-    backgroundColor: '#ffffff',
-    border: '1px solid #d1d5db',
-    borderRadius: '8px',
-    boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.1)',
-    transition: 'background-color 0.2s ease',
-    cursor: 'pointer',
-  };
-
-  const iconStyle = {
-    color: '#374151',
-  };
-
-  const buttonHoverStyle = {
-    ...buttonStyle,
-    backgroundColor: '#e5e7eb',
-  };
-
   return (
-    <div style={toolbarStyle}>
-        
-      <Button 
-        onClick={openHelpModal} 
-        style={buttonStyle} 
-        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor}
-        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor}
-      >
-        <QuestionMarkCircledIcon width={24} height={24} style={iconStyle} />
-      </Button>
+    <div className="fixed top-0 left-0 w-full flex justify-between items-center p-6 px-3 bg-[#f5f7fa] shadow-md z-50">
+      {/* Przycisk pomocy */}
+      <div className="absolute top-2 left-2">
+        <Button 
+          onClick={openHelpModal} 
+          className="flex items-center justify-center w-9 h-9 bg-white border border-gray-300 rounded-md shadow-sm transition-colors duration-200 hover:bg-gray-200 cursor-pointer"
+        >
+          <QuestionMarkCircledIcon width={24} height={24} className="text-gray-700" />
+        </Button>
+      </div>
 
+      {/* Przycisk kopiowania */}
+      <div className="absolute top-2 right-2 flex items-center space-x-2">
+        {copySuccess && (
+          <span className="text-green-600 font-medium">
+            {copySuccess}
+          </span>
+        )}
+        <Button 
+          onClick={copyEventLink} 
+          className="flex items-center justify-center w-9 h-9 bg-white border border-gray-300 rounded-md shadow-sm transition-colors duration-200 hover:bg-gray-200 cursor-pointer"
+        >
+          <Share1Icon width={24} height={24} className="text-gray-700" />
+        </Button>
+      </div>
+
+      {/* Modal pomocy */}
       {isHelpModalOpen && <HelpModal onClose={closeHelpModal} />}
-
-      <Button 
-        onClick={copyEventLink} 
-        style={buttonStyle}
-        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor}
-        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor}
-      >
-        <Share1Icon width={24} height={24} style={iconStyle} />
-      </Button>
-
-      {copySuccess && (
-        <span style={{ marginLeft: '8px', color: '#16a34a', fontWeight: '500' }}>{copySuccess}</span>
-      )}
     </div>
   );
 };
