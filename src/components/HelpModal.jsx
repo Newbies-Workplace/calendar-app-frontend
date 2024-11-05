@@ -7,7 +7,6 @@ export default function HelpModal(props) {
       <br />
       <div>
   <h1 className="text-black">Pomoc....</h1>
-  className="text-black text-left"
 </div>
 
       <Button onClick={props.onClose}>Zamknij</Button>
