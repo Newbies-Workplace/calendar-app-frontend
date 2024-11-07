@@ -65,11 +65,10 @@ function SecondPage(props) {
 
 
   useEffect(() => {
-    const cookie = JSON.parse(Cookies.get(nameCookieKey));
+    //nie dodawać ciasteczek do getów :)
     fetch(`${BACKEND_URL}/rest/events/${props.id}`, {
       headers: {
         "Content-Type": "application/json",
-        Participant: cookie.participant_id,
       },
       method: "GET",
     })
@@ -82,7 +81,6 @@ function SecondPage(props) {
     fetch(`${BACKEND_URL}/rest/events/${props.id}/statuses`, {
       headers: {
         "Content-Type": "application/json",
-        Participant: cookie.participant_id,
       },
       method: "GET",
     })
@@ -96,7 +94,6 @@ function SecondPage(props) {
     fetch(`${BACKEND_URL}/rest/events/${props.id}/participants`, {
       headers: {
         "Content-Type": "application/json",
-        Participant: cookie.participant_id,
       },
       method: "GET",
     })
