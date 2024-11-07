@@ -37,10 +37,10 @@ function Month({
 
   return (
     <div className="flex flex-col items-center w-[700px]">
-      <b>{monthName}</b>
+      <b className="text-black text-7xl w-full text-left p-4 mt-10">{monthName}</b>
       <div className="grid grid-cols-[repeat(7,1fr)] w-[700px] gap-2.5 mb-2.5">
         {weekDays.map((day, index) => (
-          <div key={index} className="w-[100px] text-center font-bold gap-6 border-black border-2 box-border">
+          <div key={index} className="w-[100px] text-center font-bold gap-6 border-black border-2 box-border text-black">
             {day}
           </div>
         ))}

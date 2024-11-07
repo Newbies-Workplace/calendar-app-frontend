@@ -9,12 +9,17 @@
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #474747;    /**/
+  background-color: #f0f0f0;    /*#474747 - stary kolor tła*/
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 
 a {
