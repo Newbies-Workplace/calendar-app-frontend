@@ -36,7 +36,7 @@ function SecondPage(props) {
 
   
   useEffect(() => {
-    const eventSource = new EventSource(`${BACKEND_URL}/event`);
+    const eventSource = new EventSource(`${BACKEND_URL}/event/${props.id}`);
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -61,13 +61,15 @@ function SecondPage(props) {
     return () => {
       eventSource.close();
     };
-  }, []);
+  }, [props.id]);
 
 
   useEffect(() => {
+    const cookie = JSON.parse(Cookies.get(nameCookieKey));
     fetch(`${BACKEND_URL}/rest/events/${props.id}`, {
       headers: {
         "Content-Type": "application/json",
+        Participant: cookie.participant_id,
       },
       method: "GET",
     })
@@ -80,6 +82,7 @@ function SecondPage(props) {
     fetch(`${BACKEND_URL}/rest/events/${props.id}/statuses`, {
       headers: {
         "Content-Type": "application/json",
+        Participant: cookie.participant_id,
       },
       method: "GET",
     })
@@ -93,6 +96,7 @@ function SecondPage(props) {
     fetch(`${BACKEND_URL}/rest/events/${props.id}/participants`, {
       headers: {
         "Content-Type": "application/json",
+        Participant: cookie.participant_id,
       },
       method: "GET",
     })
