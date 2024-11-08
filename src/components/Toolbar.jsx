@@ -62,13 +62,11 @@ const Toolbar = () => {
         </Button>
       </div>
       
-      <div className="flex flex-col">
         {/* Modal pomocy */}
-        {isHelpModalOpen && <HelpModal onClose={closeHelpModal} />}
+        {isHelpModalOpen &&   <div className="flex flex-col"><HelpModal onClose={closeHelpModal} /></div>}
 
         {/* Modal zakończenia wydarzenia */} 
-        {isEndModalOpen && <EndVoteModal onClick={closeEndModal} />}
-      </div>
+        {isEndModalOpen &&   <div className="flex flex-col"><EndVoteModal onClick={closeEndModal} /></div>}
 
     </div>
   );
