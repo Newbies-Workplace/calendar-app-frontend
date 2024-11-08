@@ -34,7 +34,39 @@ function SecondPage(props) {
   const setParticipantCookie = (data) => {
     Cookies.set(nameCookieKey, JSON.stringify(data));
   };
+
+  
   useEffect(() => {
+    const eventSource = new EventSource(`${BACKEND_URL}/event/${props.id}`);
+
+    eventSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+  
+      setVotelist((prevVotelist) => {
+        const existingVoteIndex = prevVotelist.findIndex(
+          (v) =>
+            v.day === data.day &&
+            v.participant_id === data.participant_id
+        );
+  
+        if (existingVoteIndex !== -1) {
+          const updatedVotelist = [...prevVotelist];
+          updatedVotelist[existingVoteIndex] = data;
+          return updatedVotelist;
+        } else {
+          return [...prevVotelist, data];
+        }
+      });
+    };
+
+    return () => {
+      eventSource.close();
+    };
+  }, [props.id]);
+
+
+  useEffect(() => {
+    //nie dodawać ciasteczek do getów :)
     fetch(`${BACKEND_URL}/rest/events/${props.id}`, {
       headers: {
         "Content-Type": "application/json",

@@ -30,23 +30,29 @@ export default function NameModal(props) {
     <>
       <br />
       <br />
-      <h1>Wpisz swoje imię</h1>
+      <h1 className="text-left text-4xl">Wpisz swoje imię</h1>
+      <br />
+      <hr className="flex-grow border-t-2 border-gray-400 rounded-full" />
       <br />
       <form onSubmit={handleSubmit(onSubmit)} className="text-white">
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder="Wpisz imię"
-          {...register("name", { required: "Potrzebne imię" })}
-        />
+        <div className="flex flex-col">
+          <label className="text-black object-top text-left">Twój nick</label>
+          <input
+            className="border border-black bg-gray-100 p-2 rounded-lg text-black"
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Wpisz imię"
+            {...register("name", { required: "Potrzebne imię" })}
+          />
+        </div>
         {errors.name ? (
           <div className="text-red-500 text-sm">Potrzebne imię</div>
         ) : (
           <br></br>
         )}
         <br></br>
-        <Button className="main primary ">Submit</Button>
+        <Button className="main primary ">Gotowe</Button>
       </form>
     </>
   );

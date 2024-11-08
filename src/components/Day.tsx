@@ -49,7 +49,8 @@ const Day: React.FC<DayProps> = ({ votes, dayNumber, cookieKey, hidden, onClick 
 
  
   return (
-<div onClick={hidden ? undefined : onClick}>
+<div onClick={hidden ? undefined : onClick}
+     className={`${hidden ? style.opacityHidden : ""}`}>
       <div className={`${style.day} ${backgroundColor}`}>
         <div className={style.circleRow}>
           <div
