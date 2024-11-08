@@ -10,6 +10,7 @@ import NameModal from "../components/NameModal.jsx";
 import Cookies from "js-cookie";
 import dayjs from "dayjs";
 import { Helmet } from 'react-helmet';
+import { RightPanel } from "../components/RightPanel.tsx";
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
 
@@ -146,10 +147,13 @@ function SecondPage(props) {
   };
   return (
     <>
-     <Toolbar />
  
- 
-
+     <div className={"flex w-screen h-screen text-black"}>
+    <div className={"w-2/3"}>
+      <div className={"bg-blue-700 text-white w-full h-12"}>
+        <Toolbar/>
+      </div>
+      <div className={"overflow-y-auto overflow-x-hidden h-[calc(100%-48px)] flex flex-col items-center gap-5"}>
       {event != undefined && (
         <Calendar
           votelist={votelist}
@@ -161,8 +165,22 @@ function SecondPage(props) {
           cookieKey={nameCookieKey}
         ></Calendar>
       )
-      }
-      
+      } 
+      </div>
+
+    </div>
+
+    <div
+     className={"w-1/3 h-screen bg-amber-300 flex flex-col gap-2"}>
+      {event != undefined && (
+    <RightPanel
+    title={event.name}/>
+      )}
+    
+    
+    </div>
+  </div>
+
       {event != undefined && (
         <Helmet>
         <meta property="og:title" content={event.name} />

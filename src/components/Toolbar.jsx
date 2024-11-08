@@ -29,16 +29,14 @@ const Toolbar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 w-full flex justify-between items-center p-6 px-3 bg-[#f5f7fa] shadow-md z-50">
-      <div className="flex absolute top-2 left-2 gap-2">
-        {/* Przycisk pomocy */}
+    <div className="w-full flex justify-between items-center h-12 px-3 bg-[#f5f7fa] shadow-md z-50">
+      {/* Przycisk pomocy */}
         <Button 
           onClick={openHelpModal} 
           className="flex items-center justify-center w-9 h-9 bg-white border border-gray-300 rounded-md shadow-sm transition-colors duration-200 hover:bg-gray-200 cursor-pointer"
         >
           <QuestionMarkCircledIcon width={24} height={24} className="text-gray-700" />
         </Button>
-
         {/* Przycisk zakończenia wydarzenia */}
         <Button 
           onClick={openEndModal} 
@@ -46,12 +44,11 @@ const Toolbar = () => {
         >
           <Cross1Icon width={24} height={24} className="text-gray-700" />
         </Button>
-      </div>
 
      
 
       {/* Przycisk kopiowania */}
-      <div className="absolute top-2 right-2 flex items-center space-x-2">
+      <div className="flex items-center space-x-2">
         {copySuccess && (
           <span className="text-green-600 font-medium">
             {copySuccess}
@@ -65,13 +62,11 @@ const Toolbar = () => {
         </Button>
       </div>
       
-      <div className="flex flex-col">
         {/* Modal pomocy */}
-        {isHelpModalOpen && <HelpModal onClose={closeHelpModal} />}
+        {isHelpModalOpen &&   <div className="flex flex-col"><HelpModal onClose={closeHelpModal} /></div>}
 
         {/* Modal zakończenia wydarzenia */} 
-        {isEndModalOpen && <EndVoteModal onClick={closeEndModal} />}
-      </div>
+        {isEndModalOpen &&   <div className="flex flex-col"><EndVoteModal onClick={closeEndModal} /></div>}
 
     </div>
   );
