@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({ children, onClick, variant = "outlined"
     className={cn(
     "transition ease-in-out duration-200 font-semibold rounded-xl",
       size === "md" && "p-2 text-base",
-      variant === "outlined" && "border border-gray-300 text-gray-700 bg-white hover:bg-gray-300",
+      variant === "outlined" && "border border-gray-300 text-white bg-gray-600 hover:bg-gray-500",
       variant === "filled" && "shadow-lg",
       className
      )}>
