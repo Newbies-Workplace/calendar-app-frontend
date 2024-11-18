@@ -170,15 +170,15 @@ function SecondPage(props) {
 
     </div>
 
-    <div
-     className={"w-1/3 h-screen bg-amber-300 flex flex-col gap-2"}>
-      {event != undefined && (
+    <div className={"w-1/3 h-screen bg-gray-300 flex flex-col gap-2"}>
+    {event != undefined && (
     <RightPanel
-    title={event.name}/>
-      )}
-    
-    
-    </div>
+      title={event.name}
+      description={event.description}
+    />
+  )}
+</div>
+
   </div>
 
       {event != undefined && (
