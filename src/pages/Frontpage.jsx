@@ -9,8 +9,8 @@ const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 function Frontpage(props) {
   const today = new Date();
   const defaultValue = new Date(today).toISOString().split("T")[0];
-  const tomorrow = today.setDate(today.getDate() + 1);
-  const defaultValue2 = new Date(today).toISOString().split("T")[0];
+  const week = today.setDate(today.getDate() + 7);
+  const defaultValue2 = new Date(week).toISOString().split("T")[0];
   const datetimestr = `${defaultValue}T00:00`;
   const navigate = useNavigate();
   
