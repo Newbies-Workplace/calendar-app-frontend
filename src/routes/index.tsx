@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
 import Cookies from "js-cookie";
-import Button from "../components/Button";
+import { useState } from "react";
 import React from "react";
+import { useForm } from "react-hook-form";
+import Button from "../components/Button";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
@@ -58,102 +58,84 @@ function Front() {
 			</div>
 
 			<form className="text-lg leading-tight" onSubmit={handleSubmit(onSubmit)}>
-				<div className="flex flex-col">
-					<label
-						htmlFor="event-name"
-						className="text-black object-top text-left"
-					>
+				<div className="flex flex-col gap-2">
+					<label htmlFor="name" className="text-black object-top text-left">
 						Nazwa wydarzenia{" "}
 					</label>
 					<input
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 						type="text"
-						id="event-name"
-						name="event-name"
+						id="name"
 						placeholder="Wpisz nazwę"
-						{...register("name", { required: "Potrzebnę imię" })}
+						{...register("name", { required: true })}
 					/>
-
-					{errors.name ? (
-						<div className="text-red-500 text-sm">Potrzebna nazwa</div>
-					) : (
-						<br />
+					{errors.name && (
+						<div className="text-red-500 text-sm">Nazwa jest wymagana</div>
 					)}
 					<label
-						htmlFor="event-desc"
+						htmlFor="description"
 						className="text-black object-top text-left"
 					>
 						Opis wydarzenia{" "}
 					</label>
 					<textarea
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
-						id="event-desc"
-						name="event-desc"
+						id="description"
 						placeholder="Wpisz opis (opcjonalne)"
 						{...register("description")}
 					/>
-					<br />
 					<label
-						htmlFor="event-vote-end"
+						htmlFor="voting_end"
 						className="text-black object-top text-left"
 					>
-						Do kiedy otwarte głosowanie{" "}
+						Do kiedy otwarte głosowanie
 					</label>
 					<input
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 						type="datetime-local"
-						id="event-vote-end"
-						name="event-vote-end"
+						id="voting_end"
 						lang="pl"
 						min={datetimestr}
 						{...register("voting_end", { required: "Potrzebny czas" })}
 					/>
-					<br />
 					<div className="flex space-x-5 w-full">
 						<div className="flex flex-col w-1/2">
 							<label
-								htmlFor="event-start"
+								htmlFor="start"
 								className="text-black object-top text-left"
 							>
-								Początek terminów{" "}
+								Początek terminów
 							</label>
 							<input
 								className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 								type="date"
-								id="event-start"
-								name="event-start"
+								id="start"
 								defaultValue={defaultValue}
 								lang="pl"
 								{...register("start", {
 									validate: (value) => {
 										setFirst(value);
-										if (first <= second) return true;
-										else return false;
+
+										return first <= second;
 									},
 								})}
 							/>
 
-							{errors.start ? (
+							{errors.start && (
 								<div className="text-red-500 text-sm">
 									Pierwsza data musi być przed drugą
 								</div>
-							) : (
-								<br />
 							)}
 						</div>
 
 						<div className="flex flex-col w-1/2">
-							<label
-								htmlFor="event-end"
-								className="text-black object-top text-left"
-							>
+							<label htmlFor="end" className="text-black object-top text-left">
 								Koniec terminów{" "}
 							</label>
 							<input
 								className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 								type="date"
-								id="event-end"
-								name="event-end"
+								id="end"
 								defaultValue={defaultValue2}
 								lang="pl"
 								{...register("end", {
@@ -162,12 +144,14 @@ function Front() {
 									},
 								})}
 							/>
-							<br />
 						</div>
 					</div>
 
-					<label className="text-black object-top text-left">Właściciel </label>
+					<label className="text-black object-top text-left" htmlFor={"owner"}>
+						Właściciel
+					</label>
 					<input
+						id={"owner"}
 						{...register("owner", { required: true })}
 						placeholder="Wpisz imię właściciela"
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
@@ -177,7 +161,6 @@ function Front() {
 							Właściciel jest wymagany{" "}
 						</div>
 					)}
-					<br />
 					<Button>Gotowe</Button>
 				</div>
 			</form>

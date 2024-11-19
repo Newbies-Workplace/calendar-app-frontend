@@ -1,7 +1,7 @@
 import "../index.css";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { Vote } from "../types/Vote";
+import { Vote } from "../types/responses";
 import style from "./day.module.css";
 
 interface DayProps {

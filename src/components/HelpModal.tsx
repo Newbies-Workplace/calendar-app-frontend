@@ -1,14 +1,16 @@
 import React from "react";
 import Button from "../components/Button";
 
-export const HelpModal = (props) => (
+interface HelpModalProps {
+	onClose: () => void;
+}
+
+export const HelpModal: React.FC<HelpModalProps> = ({ onClose }) => (
 	<>
-		<br />
-		<br />
 		<div>
 			<h1 className="text-black">Pomoc....</h1>
 		</div>
 
-		<Button onClick={props.onClose}>Zamknij</Button>
+		<Button onClick={onClose}>Zamknij</Button>
 	</>
 );

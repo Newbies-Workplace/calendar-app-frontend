@@ -2,7 +2,14 @@ import dayjs from "dayjs";
 import React, { useEffect } from "react";
 import Button from "./Button";
 
-export const DayModal = (props) => {
+interface DayModalProps {
+	votelist: any[];
+	dayDate: string;
+	participants: any[];
+	onClick: (dayDate: string, isAvailable: boolean) => void;
+}
+
+export const DayModal: React.FC<DayModalProps> = (props) => {
 	let currentVotes = props.votelist?.filter(
 		(vote) =>
 			dayjs(vote.day).format("YYYY-MM-DD") ===
@@ -36,7 +43,7 @@ export const DayModal = (props) => {
 							if (vote.status === "AVAILABLE") {
 								return (
 									<div
-										key={index}
+										key={vote.termin_status_id}
 										className="inline-flex items-center text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent bg-[#e6ffe6] border-[#000000] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#28a745] before:mr-2 before:rounded-[50%]"
 									>
 										{
@@ -62,7 +69,7 @@ export const DayModal = (props) => {
 							if (vote.status === "NOT_AVAILABLE") {
 								return (
 									<div
-										key={index}
+										key={vote.termin_status_id}
 										className="inline-flex items-center text-sm text-[#333] border px-2.5 py-[5px] rounded-[20px] border-solid border-transparent bg-[#ffe6e6] border-[#000000] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-[#dc3545] before:mr-2 before:rounded-[50%]"
 									>
 										{

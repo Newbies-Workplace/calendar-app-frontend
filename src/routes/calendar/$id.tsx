@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { Calendar } from "../../components/Calendar";
 import { DayModal } from "../../components/DayModal";
-import { EndVoteModal } from "../../components/EndVoteModal";
-import { HelpModal } from "../../components/HelpModal";
 import { Modal } from "../../components/Modal";
 import { NameModal } from "../../components/NameModal";
 import { RightPanel } from "../../components/RightPanel";
@@ -26,7 +24,7 @@ function CalendarPage() {
 	const [activeModal, setActiveModal] = useState(
 		cookieName === undefined ? "name" : null,
 	);
-	const [modalDate, setModalDate] = useState(null);
+	const [modalDate, setModalDate] = useState<string | null>(null);
 	const [event, setEvent] = useState();
 	const [votelist, setVotelist] = useState([]);
 	const [participants, setParticipants] = useState([]);
@@ -89,7 +87,6 @@ function CalendarPage() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				//console.log(data);
 				setVotelist(data);
 			})
 			.catch((error) => console.log(error));
@@ -103,7 +100,6 @@ function CalendarPage() {
 			.then((response) => response.json())
 			.then((data) => {
 				setParticipants(data);
-				console.log(data);
 			})
 			.catch((error) => console.log(error));
 	}, [id]);
@@ -190,7 +186,6 @@ function CalendarPage() {
 
 			{activeModal !== null && (
 				<Modal onDismiss={onDismiss}>
-					{activeModal === "end" && <EndVoteModal onClick={onDismiss} />}
 					{activeModal === "day" && (
 						<DayModal
 							dayDate={modalDate}
@@ -202,7 +197,6 @@ function CalendarPage() {
 							participants={participants}
 						/>
 					)}
-					{activeModal === "help" && <HelpModal />}
 					{activeModal === "name" && (
 						<NameModal
 							onSubmit={(prop) => {

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import duration from "dayjs/plugin/duration";
 import React from "react";
-import type { Vote } from "../types/Vote";
+import type { Vote } from "../types/responses";
 import { Month } from "./Month";
 
 dayjs.extend(duration);

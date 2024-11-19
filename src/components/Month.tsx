@@ -2,7 +2,7 @@ import "../index.css";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import React from "react";
-import { Vote } from "../types/Vote";
+import { Vote } from "../types/responses";
 import { Day } from "./Day";
 
 dayjs.extend(isBetween);
@@ -17,7 +17,7 @@ interface MonthProps {
 	dayClick: (type: string, date: string) => void;
 }
 
-export const Month = ({
+export const Month: React.FC<MonthProps> = ({
 	year,
 	monthNumber,
 	voting_start,
@@ -25,7 +25,7 @@ export const Month = ({
 	votes,
 	dayClick,
 	cookieKey,
-}: MonthProps) => {
+}) => {
 	const daysInMonth = dayjs(`${year}-${monthNumber}`).daysInMonth();
 	const startDayOfWeekDayJs = dayjs(`${year}-${monthNumber}-01`).day();
 	const weekDays = ["pn", "wt", "śr", "cz", "pt", "so", "nd"];
