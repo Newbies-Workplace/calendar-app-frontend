@@ -94,17 +94,17 @@ export const routeTree = rootRoute
 {
   "routes": {
     "__root__": {
-      "filePath": "__root.jsx",
+      "filePath": "__root.tsx",
       "children": [
         "/",
         "/calendar/$id"
       ]
     },
     "/": {
-      "filePath": "index.jsx"
+      "filePath": "index.tsx"
     },
     "/calendar/$id": {
-      "filePath": "calendar/$id.jsx"
+      "filePath": "calendar/$id.tsx"
     }
   }
 }
