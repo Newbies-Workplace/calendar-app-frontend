@@ -1,15 +1,18 @@
+import Button from "@/components/Button";
+import { Event } from "@/types/responses";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import React from "react";
 import { useForm } from "react-hook-form";
-import Button from "../components/Button";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
 export const Route = createFileRoute("/")({
 	component: Front,
 });
+
+type EventForm = Event & { owner: string };
 
 function Front() {
 	const today = new Date();
@@ -23,11 +26,11 @@ function Front() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
+	} = useForm<EventForm>();
 	const [first, setFirst] = useState("");
 	const [second, setSecond] = useState("");
 
-	const onSubmit = (data) => {
+	const onSubmit = (data: EventForm) => {
 		const body = {
 			...data,
 		};
@@ -141,6 +144,8 @@ function Front() {
 								{...register("end", {
 									validate: (value) => {
 										setSecond(value);
+
+										return first <= second;
 									},
 								})}
 							/>
@@ -157,11 +162,9 @@ function Front() {
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 					/>
 					{errors.owner && (
-						<div className="text-red-500 text-sm">
-							Właściciel jest wymagany{" "}
-						</div>
+						<div className="text-red-500 text-sm">Właściciel jest wymagany</div>
 					)}
-					<Button>Gotowe</Button>
+					<Button onClick={() => {}}>Gotowe</Button>
 				</div>
 			</form>
 		</>

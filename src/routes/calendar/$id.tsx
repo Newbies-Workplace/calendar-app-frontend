@@ -1,14 +1,15 @@
+import { Calendar } from "@/components/Calendar";
+import { DayModal } from "@/components/DayModal";
+import { Modal } from "@/components/Modal";
+import { NameModal } from "@/components/NameModal";
+import { RightPanel } from "@/components/RightPanel";
+import { Toolbar } from "@/components/Toolbar";
+import { Event, Participant, Vote } from "@/types/responses";
 import { createFileRoute } from "@tanstack/react-router";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { Calendar } from "../../components/Calendar";
-import { DayModal } from "../../components/DayModal";
-import { Modal } from "../../components/Modal";
-import { NameModal } from "../../components/NameModal";
-import { RightPanel } from "../../components/RightPanel";
-import { Toolbar } from "../../components/Toolbar";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
@@ -25,16 +26,18 @@ function CalendarPage() {
 		cookieName === undefined ? "name" : null,
 	);
 	const [modalDate, setModalDate] = useState<string | null>(null);
-	const [event, setEvent] = useState();
-	const [votelist, setVotelist] = useState([]);
-	const [participants, setParticipants] = useState([]);
-	const dayM = (name, date) => {
+	const [event, setEvent] = useState<Event>();
+	const [votelist, setVotelist] = useState<Vote[]>([]);
+	const [participants, setParticipants] = useState<Participant[]>([]);
+
+	const onDayClick = (date: string) => {
 		setModalDate(date);
-		setActiveModal(name);
+		setActiveModal("day");
 	};
 	const onDismiss = () => {
 		setActiveModal(null);
 	};
+
 	const setParticipantCookie = (data) => {
 		Cookies.set(nameCookieKey, JSON.stringify(data));
 	};
@@ -54,9 +57,9 @@ function CalendarPage() {
 					const updatedVotelist = [...prevVotelist];
 					updatedVotelist[existingVoteIndex] = data;
 					return updatedVotelist;
-				} else {
-					return [...prevVotelist, data];
 				}
+
+				return [...prevVotelist, data];
 			});
 		};
 
@@ -104,7 +107,7 @@ function CalendarPage() {
 			.catch((error) => console.log(error));
 	}, [id]);
 
-	const replaceVote = (data, day) => {
+	const replaceVote = (data: Vote, day: string) => {
 		const cookie = JSON.parse(Cookies.get(nameCookieKey));
 		setVotelist((prevVotelist) => {
 			const existingVoteIndex = prevVotelist.findIndex(
@@ -123,10 +126,13 @@ function CalendarPage() {
 		});
 	};
 
-	const submitVote = (day, vote) => {
+	const submitVote = (day: string, isAvailable: boolean) => {
 		const cookie = JSON.parse(Cookies.get(nameCookieKey));
 
-		const body = { day: day, status: vote ? "AVAILABLE" : "NOT_AVAILABLE" };
+		const body = {
+			day: day,
+			status: isAvailable ? "AVAILABLE" : "NOT_AVAILABLE",
+		};
 		fetch(`${BACKEND_URL}/rest/events/${id}/statuses`, {
 			body: JSON.stringify(body),
 			headers: {
@@ -158,9 +164,7 @@ function CalendarPage() {
 						{event !== undefined && (
 							<Calendar
 								votelist={votelist}
-								onClick={(name, date) => {
-									dayM(name, date);
-								}}
+								onClick={(date) => onDayClick(date)}
 								start={event.start}
 								end={event.end}
 								cookieKey={nameCookieKey}
@@ -186,12 +190,12 @@ function CalendarPage() {
 
 			{activeModal !== null && (
 				<Modal onDismiss={onDismiss}>
-					{activeModal === "day" && (
+					{activeModal === "day" && modalDate && (
 						<DayModal
 							dayDate={modalDate}
 							votelist={votelist}
-							onClick={(day, vote) => {
-								submitVote(day, vote);
+							onClick={(day, isAvailable) => {
+								submitVote(day, isAvailable);
 								onDismiss();
 							}}
 							participants={participants}

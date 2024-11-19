@@ -1,16 +1,14 @@
+import Button from "@/components/Button";
 import React from "react";
-import Button from "../components/Button";
 
 interface HelpModalProps {
-	onClose: () => void;
+	onDismiss: () => void;
 }
 
-export const HelpModal: React.FC<HelpModalProps> = ({ onClose }) => (
+export const HelpModal: React.FC<HelpModalProps> = ({ onDismiss }) => (
 	<>
-		<div>
-			<h1 className="text-black">Pomoc....</h1>
-		</div>
+		<h1 className="text-black">Pomoc....</h1>
 
-		<Button onClick={onClose}>Zamknij</Button>
+		<Button onClick={onDismiss}>Zamknij</Button>
 	</>
 );

@@ -5,6 +5,15 @@ export type Vote = {
 	day: string;
 };
 
-export type Event = {};
+export type Event = {
+	name: string;
+	description?: string;
+	start: string;
+	end: string;
+	voting_end: string;
+};
 
-export type Participant = {};
+export type Participant = {
+	participant_id: string;
+	name: string;
+};

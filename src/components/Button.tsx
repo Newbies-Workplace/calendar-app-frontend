@@ -1,5 +1,5 @@
+import { cn } from "@/util/cn";
 import React from "react";
-import { cn } from "../util/cn";
 
 interface ButtonProps {
 	children: React.ReactNode;

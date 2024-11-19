@@ -1,8 +1,8 @@
+import Button from "@/components/Button";
+import { EndVoteModal } from "@/components/EndVoteModal";
+import { HelpModal } from "@/components/HelpModal";
 import { CircleHelp, Share2Icon, XIcon } from "lucide-react";
 import React, { useState } from "react";
-import Button from "../components/Button";
-import { EndVoteModal } from "./EndVoteModal";
-import { HelpModal } from "./HelpModal";
 
 export const Toolbar: React.FC = () => {
 	const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -34,14 +34,14 @@ export const Toolbar: React.FC = () => {
 			{/* Przycisk pomocy */}
 			<Button
 				onClick={openHelpModal}
-				className="flex items-center justify-center w-9 h-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
+				className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
 			>
 				<CircleHelp width={24} height={24} className="text-gray-700" />
 			</Button>
 			{/* Przycisk zakończenia wydarzenia */}
 			<Button
 				onClick={openEndModal}
-				className="flex items-center justify-center w-9 h-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
+				className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
 			>
 				<XIcon width={24} height={24} className="text-gray-700" />
 			</Button>
@@ -53,7 +53,7 @@ export const Toolbar: React.FC = () => {
 				)}
 				<Button
 					onClick={copyEventLink}
-					className="flex items-center justify-center w-9 h-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
+					className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
 				>
 					<Share2Icon width={24} height={24} className="text-gray-700" />
 				</Button>
@@ -62,14 +62,14 @@ export const Toolbar: React.FC = () => {
 			{/* Modal pomocy */}
 			{isHelpModalOpen && (
 				<div className="flex flex-col">
-					<HelpModal onClose={closeHelpModal} />
+					<HelpModal onDismiss={closeHelpModal} />
 				</div>
 			)}
 
 			{/* Modal zakończenia wydarzenia */}
 			{isEndModalOpen && (
 				<div className="flex flex-col">
-					<EndVoteModal onClick={closeEndModal} />
+					<EndVoteModal onDismiss={closeEndModal} onFinish={() => {}} />
 				</div>
 			)}
 		</div>

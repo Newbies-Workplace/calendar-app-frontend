@@ -4,7 +4,11 @@ const config: Config = {
 	content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
 	theme: {
 		extend: {
-			colors: {},
+			colors: {
+				statusAvailable: "#10B981",
+				statusNotAvailable: "#EF4444",
+				statusMixed: "#F59E0B",
+			},
 		},
 	},
 	plugins: [],

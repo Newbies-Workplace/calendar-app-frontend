@@ -1,9 +1,8 @@
-import "../index.css";
+import { Day } from "@/components/Day";
+import { Vote } from "@/types/responses";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import React from "react";
-import { Vote } from "../types/responses";
-import { Day } from "./Day";
 
 dayjs.extend(isBetween);
 
@@ -14,7 +13,7 @@ interface MonthProps {
 	voting_end: string;
 	votes: Vote[];
 	cookieKey: string;
-	dayClick: (type: string, date: string) => void;
+	dayClick: (date: string) => void;
 }
 
 export const Month: React.FC<MonthProps> = ({
@@ -84,14 +83,13 @@ export const Month: React.FC<MonthProps> = ({
 									"[]",
 								)
 							}
-							onClick={() => {
+							onClick={() =>
 								dayClick(
-									"day",
 									dayjs(`${year}-${monthNumber}-${index + 1}`).format(
 										"YYYY-MM-DD",
 									),
-								);
-							}}
+								)
+							}
 						/>
 					);
 				})}

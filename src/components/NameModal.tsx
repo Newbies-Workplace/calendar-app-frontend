@@ -1,14 +1,16 @@
+import Button from "@/components/Button";
 import React from "react";
 import { useForm } from "react-hook-form";
-import Button from "./Button";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
+interface NameForm {
+	name: string;
+}
+
 interface NameModalProps {
 	eventId: string;
-	onSubmit: (data: {
-		name: string;
-	}) => void;
+	onSubmit: (data: NameForm) => void;
 }
 
 export const NameModal: React.FC<NameModalProps> = (props) => {
@@ -16,9 +18,9 @@ export const NameModal: React.FC<NameModalProps> = (props) => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
+	} = useForm<NameForm>();
 
-	const onSubmit = (data) => {
+	const onSubmit = (data: NameForm) => {
 		console.log(data);
 
 		fetch(`${BACKEND_URL}/rest/events/${props.eventId}/participants`, {

@@ -1,20 +1,25 @@
+import Button from "@/components/Button";
 import React from "react";
-import Button from "./Button";
 
-export const EndVoteModal = (props) => (
+interface EndVoteModalProps {
+	onDismiss: () => void;
+	onFinish: () => void;
+}
+
+export const EndVoteModal: React.FC<EndVoteModalProps> = ({
+	onDismiss,
+	onFinish,
+}) => (
 	<>
-		<br />
 		<h1 className="text-left text-4xl text-black">
 			Czy na pewno chcesz zakończyć głosowanie?
 		</h1>
-		<br />
 		<hr className="flex-grow border-t-2 border-gray-400 rounded-full" />
-		<br />
-		<div className="flex justify-end gap-2.5 text-white">
-			<Button className="main" onClick={() => {}}>
+		<div className="flex justify-end gap-2 text-white">
+			<Button className="main" onClick={onDismiss}>
 				Wróć
 			</Button>
-			<Button className="main" onClick={props.onClick}>
+			<Button className="main" onClick={onFinish}>
 				Zakończ
 			</Button>
 		</div>

@@ -1,5 +1,5 @@
+import Button from "@/components/Button";
 import React from "react";
-import Button from "./Button";
 
 interface ModalProps {
 	children: React.ReactNode;

@@ -1,8 +1,6 @@
-import "../index.css";
+import { Vote } from "@/types/responses";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { Vote } from "../types/responses";
-import style from "./day.module.css";
 
 interface DayProps {
 	votes: Vote[];
@@ -19,9 +17,7 @@ export const Day: React.FC<DayProps> = ({
 	hidden,
 	onClick,
 }) => {
-	const [backgroundColor, setBackgroundClass] = useState<string>(
-		style.bgDefault,
-	);
+	const [backgroundColor, setBackgroundClass] = useState<string>("bg-gray-200");
 	const [visibility, setVisibility] = useState<string>("");
 	const cookie = Cookies.get(cookieKey)
 		? JSON.parse(Cookies.get(cookieKey) as string)
@@ -33,39 +29,41 @@ export const Day: React.FC<DayProps> = ({
 
 	useEffect(() => {
 		if (hidden) {
-			setBackgroundClass(style.bgHidden);
+			setBackgroundClass("bg-gray-500");
 			setVisibility("invisible");
 			return;
 		}
 
-		setBackgroundClass(style.bgActive);
+		setBackgroundClass("bg-white");
 
 		if (votes.length <= 0) {
 			return;
 		}
 
 		if (votes.every((vote) => vote.status === "AVAILABLE")) {
-			setBackgroundClass(style.bgAvailable); // Zielone tło
+			setBackgroundClass("bg-green-500");
 		} else if (votes.every((vote) => vote.status === "NOT_AVAILABLE")) {
-			setBackgroundClass(style.bgNotAvailable); // Czerwone tło
+			setBackgroundClass("bg-red-500");
 		} else {
-			setBackgroundClass(style.bgMixed); // Żółte tło
+			setBackgroundClass("bg-yellow-500");
 		}
 	}, [votes, hidden]);
 
 	return (
 		<div
 			onClick={hidden ? undefined : onClick}
-			className={`${hidden ? style.opacityHidden : ""}`}
+			className={`${hidden ? "opacity-30" : ""}`}
 		>
-			<div className={`${style.day} ${backgroundColor}`}>
-				<div className={style.circleRow}>
+			<div
+				className={`size-24 border border-black rounded-lg flex flex-col justify-between items-start relative p-2 ${backgroundColor}`}
+			>
+				<div className="flex gap-1 flex-wrap">
 					<div
-						className={`${style.circle} ${
+						className={`w-4 h-4 rounded-full border border-black ${
 							currentVote
 								? currentVote.status === "AVAILABLE"
-									? style.available
-									: style.notAvailable
+									? "bg-green-500"
+									: "bg-red-500"
 								: ""
 						} ${visibility}`}
 					/>
@@ -73,16 +71,19 @@ export const Day: React.FC<DayProps> = ({
 						if (vote.participant_id !== cookie.participant_id) {
 							return (
 								<div
-									// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-									key={index}
-									className={`${style.circle} ${vote.status === "AVAILABLE" ? style.available : style.notAvailable} ${visibility}`}
+									key={vote.termin_status_id}
+									className={`w-4 h-4 rounded-full border border-black ${
+										vote.status === "AVAILABLE" ? "bg-green-500" : "bg-red-500"
+									} ${visibility}`}
 								/>
 							);
 						}
 						return null;
 					})}
 				</div>
-				<div className={style.number}>{dayNumber}</div>
+				<div className="absolute bottom-1 right-1 text-lg font-bold text-black">
+					{dayNumber}
+				</div>
 			</div>
 		</div>
 	);
