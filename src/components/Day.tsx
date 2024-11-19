@@ -41,11 +41,11 @@ export const Day: React.FC<DayProps> = ({
 		}
 
 		if (votes.every((vote) => vote.status === "AVAILABLE")) {
-			setBackgroundClass("bg-green-500");
+			setBackgroundClass("bg-status-available/50");
 		} else if (votes.every((vote) => vote.status === "NOT_AVAILABLE")) {
-			setBackgroundClass("bg-red-500");
+			setBackgroundClass("bg-status-not-available/50");
 		} else {
-			setBackgroundClass("bg-yellow-500");
+			setBackgroundClass("bg-status-mixed/50");
 		}
 	}, [votes, hidden]);
 
@@ -62,23 +62,26 @@ export const Day: React.FC<DayProps> = ({
 						className={`w-4 h-4 rounded-full border border-black ${
 							currentVote
 								? currentVote.status === "AVAILABLE"
-									? "bg-green-500"
-									: "bg-red-500"
+									? "bg-status-available"
+									: "bg-status-not-available"
 								: ""
 						} ${visibility}`}
 					/>
 					{votes.map((vote, index) => {
-						if (vote.participant_id !== cookie.participant_id) {
-							return (
-								<div
-									key={vote.termin_status_id}
-									className={`w-4 h-4 rounded-full border border-black ${
-										vote.status === "AVAILABLE" ? "bg-green-500" : "bg-red-500"
-									} ${visibility}`}
-								/>
-							);
+						if (vote.participant_id === cookie.participant_id) {
+							return null;
 						}
-						return null;
+
+						return (
+							<div
+								key={vote.termin_status_id}
+								className={`w-4 h-4 rounded-full border border-black ${
+									vote.status === "AVAILABLE"
+										? "bg-status-available"
+										: "bg-status-not-available"
+								} ${visibility}`}
+							/>
+						);
 					})}
 				</div>
 				<div className="absolute bottom-1 right-1 text-lg font-bold text-black">

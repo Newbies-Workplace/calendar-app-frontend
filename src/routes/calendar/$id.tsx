@@ -119,7 +119,6 @@ function CalendarPage() {
 			if (existingVoteIndex !== -1) {
 				const updatedVotelist = [...prevVotelist];
 				updatedVotelist[existingVoteIndex] = data;
-				console.log("test ifa");
 				return updatedVotelist;
 			}
 			return [...prevVotelist, data];
@@ -143,8 +142,6 @@ function CalendarPage() {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
-				//window.location.reload();
 				replaceVote(data, day);
 			})
 			.catch((error) => console.log(error));
@@ -205,6 +202,7 @@ function CalendarPage() {
 						<NameModal
 							onSubmit={(prop) => {
 								setParticipantCookie(prop);
+								onDismiss();
 							}}
 							eventId={id}
 						/>

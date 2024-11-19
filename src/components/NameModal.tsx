@@ -21,8 +21,6 @@ export const NameModal: React.FC<NameModalProps> = (props) => {
 	} = useForm<NameForm>();
 
 	const onSubmit = (data: NameForm) => {
-		console.log(data);
-
 		fetch(`${BACKEND_URL}/rest/events/${props.eventId}/participants`, {
 			body: JSON.stringify(data),
 			headers: {
@@ -32,7 +30,6 @@ export const NameModal: React.FC<NameModalProps> = (props) => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
 				props.onSubmit(data);
 			})
 			.catch((error) => console.log(error));

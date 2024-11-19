@@ -5,9 +5,9 @@ const config: Config = {
 	theme: {
 		extend: {
 			colors: {
-				statusAvailable: "#10B981",
-				statusNotAvailable: "#EF4444",
-				statusMixed: "#F59E0B",
+				"status-available": "#67DF52",
+				"status-not-available": "#F05555",
+				"status-mixed": "#e3a33c",
 			},
 		},
 	},
