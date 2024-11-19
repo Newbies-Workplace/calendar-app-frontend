@@ -4,10 +4,11 @@ import { Modal } from "@/components/Modal";
 import { NameModal } from "@/components/NameModal";
 import { RightPanel } from "@/components/RightPanel";
 import { Toolbar } from "@/components/Toolbar";
+import { useParticipantCookie } from "@/hooks/useParticipantCookie";
 import { Event, Participant, Vote } from "@/types/responses";
+import { myFetch } from "@/util/myFetch";
 import { createFileRoute } from "@tanstack/react-router";
 import dayjs from "dayjs";
-import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 
@@ -18,16 +19,17 @@ export const Route = createFileRoute("/calendar/$id")({
 });
 
 function CalendarPage() {
-	const { id } = Route.useParams();
+	const { id: eventId } = Route.useParams();
+	const { getParticipantFromCookie, saveParticipantToCookie } =
+		useParticipantCookie();
 
-	const nameCookieKey = `${id}`;
-	const cookieName = Cookies.get(nameCookieKey);
 	const [activeModal, setActiveModal] = useState(
-		cookieName === undefined ? "name" : null,
+		getParticipantFromCookie(eventId) === undefined ? "name" : null,
 	);
 	const [modalDate, setModalDate] = useState<string | null>(null);
+
 	const [event, setEvent] = useState<Event>();
-	const [votelist, setVotelist] = useState<Vote[]>([]);
+	const [votes, setVotes] = useState<Vote[]>([]);
 	const [participants, setParticipants] = useState<Participant[]>([]);
 
 	const onDayClick = (date: string) => {
@@ -38,82 +40,64 @@ function CalendarPage() {
 		setActiveModal(null);
 	};
 
-	const setParticipantCookie = (data) => {
-		Cookies.set(nameCookieKey, JSON.stringify(data));
-	};
-
 	useEffect(() => {
-		const eventSource = new EventSource(`${BACKEND_URL}/event/${id}`);
+		const eventSource = new EventSource(`${BACKEND_URL}/event/${eventId}`);
 
 		eventSource.onmessage = (event) => {
-			const data = JSON.parse(event.data);
+			const data: Vote = JSON.parse(event.data);
 
-			setVotelist((prevVotelist) => {
-				const existingVoteIndex = prevVotelist.findIndex(
-					(v) => v.day === data.day && v.participant_id === data.participant_id,
-				);
-
-				if (existingVoteIndex !== -1) {
-					const updatedVotelist = [...prevVotelist];
-					updatedVotelist[existingVoteIndex] = data;
-					return updatedVotelist;
-				}
-
-				return [...prevVotelist, data];
-			});
+			replaceVote(data, data.day);
 		};
 
 		return () => {
 			eventSource.close();
 		};
-	}, [id]);
+	}, [eventId]);
 
 	useEffect(() => {
-		//nie dodawać ciasteczek do getów :)
-		fetch(`${BACKEND_URL}/rest/events/${id}`, {
+		myFetch<Event>(`${BACKEND_URL}/rest/events/${eventId}`, {
 			headers: {
 				"Content-Type": "application/json",
 			},
 			method: "GET",
 		})
-			.then((response) => response.json())
 			.then((data) => {
 				setEvent(data);
 			})
 			.catch((error) => console.log(error));
 
-		fetch(`${BACKEND_URL}/rest/events/${id}/statuses`, {
+		myFetch<Vote[]>(`${BACKEND_URL}/rest/events/${eventId}/statuses`, {
 			headers: {
 				"Content-Type": "application/json",
 			},
 			method: "GET",
 		})
-			.then((response) => response.json())
 			.then((data) => {
-				setVotelist(data);
+				setVotes(data);
 			})
 			.catch((error) => console.log(error));
 
-		fetch(`${BACKEND_URL}/rest/events/${id}/participants`, {
-			headers: {
-				"Content-Type": "application/json",
+		myFetch<Participant[]>(
+			`${BACKEND_URL}/rest/events/${eventId}/participants`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+				method: "GET",
 			},
-			method: "GET",
-		})
-			.then((response) => response.json())
+		)
 			.then((data) => {
 				setParticipants(data);
 			})
 			.catch((error) => console.log(error));
-	}, [id]);
+	}, [eventId]);
 
 	const replaceVote = (data: Vote, day: string) => {
-		const cookie = JSON.parse(Cookies.get(nameCookieKey));
-		setVotelist((prevVotelist) => {
+		setVotes((prevVotelist) => {
 			const existingVoteIndex = prevVotelist.findIndex(
 				(v) =>
 					dayjs(v.day).isSame(day, "day") &&
-					v.participant_id === cookie.participant_id,
+					v.participant_id === data.participant_id,
 			);
 
 			if (existingVoteIndex !== -1) {
@@ -126,13 +110,17 @@ function CalendarPage() {
 	};
 
 	const submitVote = (day: string, isAvailable: boolean) => {
-		const cookie = JSON.parse(Cookies.get(nameCookieKey));
+		const cookie: Participant | undefined = getParticipantFromCookie(eventId);
+		if (cookie === undefined) {
+			setActiveModal("name");
+			return;
+		}
 
 		const body = {
 			day: day,
 			status: isAvailable ? "AVAILABLE" : "NOT_AVAILABLE",
 		};
-		fetch(`${BACKEND_URL}/rest/events/${id}/statuses`, {
+		myFetch<Vote>(`${BACKEND_URL}/rest/events/${eventId}/statuses`, {
 			body: JSON.stringify(body),
 			headers: {
 				"Content-Type": "application/json",
@@ -140,19 +128,25 @@ function CalendarPage() {
 			},
 			method: "PUT",
 		})
-			.then((response) => response.json())
 			.then((data) => {
 				replaceVote(data, day);
 			})
 			.catch((error) => console.log(error));
 	};
+
 	return (
 		<>
+			{event !== undefined && (
+				<Helmet>
+					<meta property="og:title" content={event.name} />
+					<meta property="og:description" content={event.description} />
+					<title>{event.name}</title>
+				</Helmet>
+			)}
+
 			<div className={"flex w-screen h-screen text-black"}>
 				<div className={"w-2/3"}>
-					<div className={"bg-blue-700 text-white w-full h-12"}>
-						<Toolbar />
-					</div>
+					<Toolbar />
 					<div
 						className={
 							"overflow-y-auto overflow-x-hidden h-[calc(100%-48px)] flex flex-col items-center gap-5"
@@ -160,11 +154,11 @@ function CalendarPage() {
 					>
 						{event !== undefined && (
 							<Calendar
-								votelist={votelist}
+								votes={votes}
 								onClick={(date) => onDayClick(date)}
 								start={event.start}
 								end={event.end}
-								cookieKey={nameCookieKey}
+								eventId={eventId}
 							/>
 						)}
 					</div>
@@ -177,21 +171,13 @@ function CalendarPage() {
 				</div>
 			</div>
 
-			{event !== undefined && (
-				<Helmet>
-					<meta property="og:title" content={event.name} />
-					<meta property="og:description" content={event.description} />
-					<title>{event.name}</title>
-				</Helmet>
-			)}
-
 			{activeModal !== null && (
 				<Modal onDismiss={onDismiss}>
 					{activeModal === "day" && modalDate && (
 						<DayModal
-							dayDate={modalDate}
-							votelist={votelist}
-							onClick={(day, isAvailable) => {
+							day={modalDate}
+							votes={votes}
+							onVotePress={(day, isAvailable) => {
 								submitVote(day, isAvailable);
 								onDismiss();
 							}}
@@ -200,11 +186,12 @@ function CalendarPage() {
 					)}
 					{activeModal === "name" && (
 						<NameModal
-							onSubmit={(prop) => {
-								setParticipantCookie(prop);
+							onSubmit={(participant) => {
+								saveParticipantToCookie(eventId, participant);
+								setParticipants([...participants, participant]);
 								onDismiss();
 							}}
-							eventId={id}
+							eventId={eventId}
 						/>
 					)}
 				</Modal>

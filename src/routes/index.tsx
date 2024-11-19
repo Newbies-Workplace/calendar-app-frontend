@@ -1,20 +1,22 @@
 import Button from "@/components/Button";
+import { useParticipantCookie } from "@/hooks/useParticipantCookie";
 import { Event } from "@/types/responses";
+import { myFetch } from "@/util/myFetch";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import Cookies from "js-cookie";
-import { useState } from "react";
+import dayjs from "dayjs";
 import React from "react";
 import { useForm } from "react-hook-form";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
 export const Route = createFileRoute("/")({
-	component: Front,
+	component: CreateEventPage,
 });
 
-type EventForm = Event & { owner: string };
+type EventForm = Omit<Event, "owner"> & { owner: string };
 
-function Front() {
+function CreateEventPage() {
+	const { saveParticipantToCookie } = useParticipantCookie();
 	const today = new Date();
 	const defaultValue = new Date(today).toISOString().split("T")[0];
 	const week = today.setDate(today.getDate() + 7);
@@ -25,45 +27,47 @@ function Front() {
 	const {
 		register,
 		handleSubmit,
+		watch,
 		formState: { errors },
-	} = useForm<EventForm>();
-	const [first, setFirst] = useState("");
-	const [second, setSecond] = useState("");
+	} = useForm<EventForm>({
+		defaultValues: {
+			name: "",
+			description: "",
+			voting_end: "",
+			start: defaultValue,
+			end: defaultValue2,
+			owner: "",
+		},
+		mode: "all",
+	});
+	const [start, end] = watch(["start", "end"]);
 
 	const onSubmit = (data: EventForm) => {
-		const body = {
-			...data,
-		};
-
-		fetch(`${BACKEND_URL}/rest/events`, {
-			body: JSON.stringify(body),
+		myFetch<Event>(`${BACKEND_URL}/rest/events`, {
+			body: JSON.stringify(data),
 			headers: {
 				"Content-Type": "application/json",
 			},
 			method: "POST",
 		})
-			.then((response) => response.json())
-			.then((data) => {
-				Cookies.set(data.id, JSON.stringify(data.owner));
+			.then((event) => {
+				saveParticipantToCookie(event.id, event.owner);
 
-				navigate({ to: `/calendar/${data.id}` });
+				navigate({ to: `/calendar/${event.id}` });
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => console.error(error));
 	};
 
 	return (
 		<>
-			<div>
-				<h1 className="text-black border border-black bg-gray-100 p-4 rounded-lg">
-					Planowanie wydarzeń
-				</h1>
-				<br />
-			</div>
+			<h1 className="text-black border border-black bg-gray-100 p-4 rounded-lg">
+				Planowanie wydarzeń
+			</h1>
 
 			<form className="text-lg leading-tight" onSubmit={handleSubmit(onSubmit)}>
 				<div className="flex flex-col gap-2">
 					<label htmlFor="name" className="text-black object-top text-left">
-						Nazwa wydarzenia{" "}
+						Nazwa wydarzenia
 					</label>
 					<input
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
@@ -79,7 +83,7 @@ function Front() {
 						htmlFor="description"
 						className="text-black object-top text-left"
 					>
-						Opis wydarzenia{" "}
+						Opis wydarzenia
 					</label>
 					<textarea
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
@@ -91,7 +95,7 @@ function Front() {
 						htmlFor="voting_end"
 						className="text-black object-top text-left"
 					>
-						Do kiedy otwarte głosowanie
+						Czas zakończenia głosowania
 					</label>
 					<input
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
@@ -99,10 +103,16 @@ function Front() {
 						id="voting_end"
 						lang="pl"
 						min={datetimestr}
-						{...register("voting_end", { required: "Potrzebny czas" })}
+						{...register("voting_end", { required: true })}
 					/>
+					{errors.voting_end && (
+						<div className="text-red-500 text-sm">
+							Czas zakończenia głosowania jest wymagany
+						</div>
+					)}
+
 					<div className="flex space-x-5 w-full">
-						<div className="flex flex-col w-1/2">
+						<div className="flex flex-col gap-2 w-1/2">
 							<label
 								htmlFor="start"
 								className="text-black object-top text-left"
@@ -113,56 +123,45 @@ function Front() {
 								className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 								type="date"
 								id="start"
-								defaultValue={defaultValue}
 								lang="pl"
 								{...register("start", {
-									validate: (value) => {
-										setFirst(value);
-
-										return first <= second;
-									},
+									validate: () => dayjs(start).isBefore(dayjs(end)),
 								})}
 							/>
-
-							{errors.start && (
-								<div className="text-red-500 text-sm">
-									Pierwsza data musi być przed drugą
-								</div>
-							)}
 						</div>
 
-						<div className="flex flex-col w-1/2">
+						<div className="flex flex-col gap-2 w-1/2">
 							<label htmlFor="end" className="text-black object-top text-left">
-								Koniec terminów{" "}
+								Koniec terminów
 							</label>
 							<input
 								className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 								type="date"
 								id="end"
-								defaultValue={defaultValue2}
 								lang="pl"
 								{...register("end", {
-									validate: (value) => {
-										setSecond(value);
-
-										return first <= second;
-									},
+									validate: () => dayjs(start).isBefore(dayjs(end)),
 								})}
 							/>
 						</div>
 					</div>
+					{(errors.start || errors.end) && (
+						<div className="text-red-500 text-sm">
+							Początek głosowania powinien być przed końcem
+						</div>
+					)}
 
 					<label className="text-black object-top text-left" htmlFor={"owner"}>
-						Właściciel
+						Twój nick
 					</label>
 					<input
 						id={"owner"}
 						{...register("owner", { required: true })}
-						placeholder="Wpisz imię właściciela"
+						placeholder="Wpisz swój nick"
 						className="border border-black bg-gray-100 p-2 rounded-lg text-black"
 					/>
 					{errors.owner && (
-						<div className="text-red-500 text-sm">Właściciel jest wymagany</div>
+						<div className="text-red-500 text-sm">Twój nick jest wymagany</div>
 					)}
 					<Button onClick={() => {}}>Gotowe</Button>
 				</div>

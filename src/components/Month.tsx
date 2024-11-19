@@ -7,23 +7,23 @@ import React from "react";
 dayjs.extend(isBetween);
 
 interface MonthProps {
+	eventId: string;
 	year: number;
 	monthNumber: number;
 	voting_start: string;
 	voting_end: string;
 	votes: Vote[];
-	cookieKey: string;
-	dayClick: (date: string) => void;
+	onDayClick: (date: string) => void;
 }
 
 export const Month: React.FC<MonthProps> = ({
+	eventId,
 	year,
 	monthNumber,
 	voting_start,
 	voting_end,
 	votes,
-	dayClick,
-	cookieKey,
+	onDayClick,
 }) => {
 	const daysInMonth = dayjs(`${year}-${monthNumber}`).daysInMonth();
 	const startDayOfWeekDayJs = dayjs(`${year}-${monthNumber}-01`).day();
@@ -48,15 +48,17 @@ export const Month: React.FC<MonthProps> = ({
 			<div className="grid grid-cols-[repeat(7,1fr)] w-[700px] gap-2.5 mb-2.5">
 				{weekDays.map((day, index) => (
 					<div
+						// biome-ignore lint/suspicious/noArrayIndexKey:
 						key={index}
-						className="w-[100px] text-center font-bold gap-6 border-black border-2 box-border text-black"
+						className="w-24 text-center font-bold gap-6 border-black border-2 box-border text-black"
 					>
 						{day}
 					</div>
 				))}
 			</div>
-			<div className="grid grid-cols-[repeat(7,1fr)] w-[700px] gap-2.5 w-full">
-				{emptyDays.slice(0, startDayOfWeek - 1).map((day, index) => (
+			<div className="grid grid-cols-[repeat(7,1fr)] w-[700px] gap-2.5">
+				{emptyDays.slice(0, startDayOfWeek - 1).map((_, index) => (
+					// biome-ignore lint/suspicious/noArrayIndexKey:
 					<div key={index} />
 				))}
 				{daysArray.map((day, index) => {
@@ -71,10 +73,11 @@ export const Month: React.FC<MonthProps> = ({
 					);
 					return (
 						<Day
+							// biome-ignore lint/suspicious/noArrayIndexKey:
 							key={index}
 							votes={votefound}
 							dayNumber={index + 1}
-							cookieKey={cookieKey}
+							eventId={eventId}
 							hidden={
 								!dayjs(`${year}-${monthNumber}-${index + 1}`).isBetween(
 									voting_start,
@@ -84,7 +87,7 @@ export const Month: React.FC<MonthProps> = ({
 								)
 							}
 							onClick={() =>
-								dayClick(
+								onDayClick(
 									dayjs(`${year}-${monthNumber}-${index + 1}`).format(
 										"YYYY-MM-DD",
 									),

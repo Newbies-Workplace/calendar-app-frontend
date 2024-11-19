@@ -1,30 +1,29 @@
+import { useParticipantCookie } from "@/hooks/useParticipantCookie";
 import { Vote } from "@/types/responses";
-import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
 
 interface DayProps {
+	eventId: string;
 	votes: Vote[];
 	dayNumber: number;
-	cookieKey: string;
 	hidden: boolean;
 	onClick: () => void;
 }
 
 export const Day: React.FC<DayProps> = ({
+	eventId,
 	votes,
 	dayNumber,
-	cookieKey,
 	hidden,
 	onClick,
 }) => {
 	const [backgroundColor, setBackgroundClass] = useState<string>("bg-gray-200");
 	const [visibility, setVisibility] = useState<string>("");
-	const cookie = Cookies.get(cookieKey)
-		? JSON.parse(Cookies.get(cookieKey) as string)
-		: {};
+	const { getParticipantFromCookie } = useParticipantCookie();
+	const participant = getParticipantFromCookie(eventId);
 
 	const currentVote = votes.find(
-		(vote) => vote.participant_id === cookie.participant_id,
+		(vote) => vote.participant_id === participant?.participant_id,
 	);
 
 	useEffect(() => {
@@ -67,8 +66,8 @@ export const Day: React.FC<DayProps> = ({
 								: ""
 						} ${visibility}`}
 					/>
-					{votes.map((vote, index) => {
-						if (vote.participant_id === cookie.participant_id) {
+					{votes.map((vote) => {
+						if (vote.participant_id === participant?.participant_id) {
 							return null;
 						}
 

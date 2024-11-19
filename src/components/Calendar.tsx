@@ -9,16 +9,16 @@ dayjs.extend(duration);
 interface CalendarProps {
 	start: string;
 	end: string;
-	votelist: Vote[];
-	cookieKey: string;
+	votes: Vote[];
+	eventId: string;
 	onClick: (date: string) => void;
 }
 
 export const Calendar = ({
 	start,
 	end,
-	votelist,
-	cookieKey,
+	votes,
+	eventId,
 	onClick,
 }: CalendarProps) => {
 	const startDate = dayjs(start);
@@ -48,9 +48,9 @@ export const Calendar = ({
 							monthNumber={monthNumber}
 							voting_start={dayjs(start).format("YYYY-MM-DD")}
 							voting_end={dayjs(end).format("YYYY-MM-DD")}
-							votes={votelist}
-							dayClick={(date) => onClick(date)}
-							cookieKey={cookieKey}
+							votes={votes}
+							onDayClick={(date) => onClick(date)}
+							eventId={eventId}
 						/>
 					</div>
 				);

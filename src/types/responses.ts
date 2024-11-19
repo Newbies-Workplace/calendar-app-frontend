@@ -6,11 +6,13 @@ export type Vote = {
 };
 
 export type Event = {
+	id: string;
 	name: string;
 	description?: string;
 	start: string;
 	end: string;
 	voting_end: string;
+	owner: Participant;
 };
 
 export type Participant = {

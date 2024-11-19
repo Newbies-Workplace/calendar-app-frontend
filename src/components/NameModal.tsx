@@ -1,4 +1,6 @@
 import Button from "@/components/Button";
+import { Participant } from "@/types/responses";
+import { myFetch } from "@/util/myFetch";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -10,7 +12,7 @@ interface NameForm {
 
 interface NameModalProps {
 	eventId: string;
-	onSubmit: (data: NameForm) => void;
+	onSubmit: (data: Participant) => void;
 }
 
 export const NameModal: React.FC<NameModalProps> = (props) => {
@@ -18,17 +20,19 @@ export const NameModal: React.FC<NameModalProps> = (props) => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<NameForm>();
+	} = useForm<NameForm>({ mode: "all" });
 
 	const onSubmit = (data: NameForm) => {
-		fetch(`${BACKEND_URL}/rest/events/${props.eventId}/participants`, {
-			body: JSON.stringify(data),
-			headers: {
-				"Content-Type": "application/json",
+		myFetch<Participant>(
+			`${BACKEND_URL}/rest/events/${props.eventId}/participants`,
+			{
+				body: JSON.stringify(data),
+				headers: {
+					"Content-Type": "application/json",
+				},
+				method: "POST",
 			},
-			method: "POST",
-		})
-			.then((response) => response.json())
+		)
 			.then((data) => {
 				props.onSubmit(data);
 			})
