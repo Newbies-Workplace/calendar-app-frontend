@@ -20,5 +20,5 @@ app.use(fallback(path.join(publicDir, "index.html")));
 app.use(prerender.set("prerenderToken", token));
 
 app.listen(port, () => {
-	console.log(`Listening on ${port}`);
+  console.log(`Listening on ${port}`);
 });

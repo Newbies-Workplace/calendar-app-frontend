@@ -5,14 +5,14 @@ import EnvironmentPlugin from "vite-plugin-environment";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	resolve: {
-		alias: {
-			"@": "/src",
-		},
-	},
-	plugins: [
-		TanStackRouterVite(),
-		react(),
-		EnvironmentPlugin("all", { prefix: "CALENDAR" }),
-	],
+  resolve: {
+    alias: {
+      "@": "/src",
+    },
+  },
+  plugins: [
+    TanStackRouterVite(),
+    react(),
+    EnvironmentPlugin("all", { prefix: "CALENDAR" }),
+  ],
 });

@@ -7,54 +7,54 @@ import React from "react";
 dayjs.extend(duration);
 
 interface CalendarProps {
-	start: string;
-	end: string;
-	votes: Vote[];
-	eventId: string;
-	onClick: (date: string) => void;
+  start: string;
+  end: string;
+  votes: Vote[];
+  eventId: string;
+  onClick: (date: string) => void;
 }
 
 export const Calendar = ({
-	start,
-	end,
-	votes,
-	eventId,
-	onClick,
+  start,
+  end,
+  votes,
+  eventId,
+  onClick,
 }: CalendarProps) => {
-	const startDate = dayjs(start);
-	const endDate = dayjs(end);
+  const startDate = dayjs(start);
+  const endDate = dayjs(end);
 
-	const repeats =
-		(endDate.year() - startDate.year()) * 12 +
-		(endDate.month() - startDate.month()) +
-		1;
+  const repeats =
+    (endDate.year() - startDate.year()) * 12 +
+    (endDate.month() - startDate.month()) +
+    1;
 
-	return (
-		<>
-			{[...Array(repeats)].map((_, i) => {
-				const year = Number.parseInt(
-					dayjs(start).add(i, "month").format("YYYY"),
-					10,
-				);
-				const monthNumber = Number.parseInt(
-					dayjs(start).add(i, "month").format("MM"),
-					10,
-				);
+  return (
+    <>
+      {[...Array(repeats)].map((_, i) => {
+        const year = Number.parseInt(
+          dayjs(start).add(i, "month").format("YYYY"),
+          10,
+        );
+        const monthNumber = Number.parseInt(
+          dayjs(start).add(i, "month").format("MM"),
+          10,
+        );
 
-				return (
-					<div key={`${year}-${monthNumber}`}>
-						<Month
-							year={year}
-							monthNumber={monthNumber}
-							voting_start={dayjs(start).format("YYYY-MM-DD")}
-							voting_end={dayjs(end).format("YYYY-MM-DD")}
-							votes={votes}
-							onDayClick={(date) => onClick(date)}
-							eventId={eventId}
-						/>
-					</div>
-				);
-			})}
-		</>
-	);
+        return (
+          <div key={`${year}-${monthNumber}`}>
+            <Month
+              year={year}
+              monthNumber={monthNumber}
+              voting_start={dayjs(start).format("YYYY-MM-DD")}
+              voting_end={dayjs(end).format("YYYY-MM-DD")}
+              votes={votes}
+              onDayClick={(date) => onClick(date)}
+              eventId={eventId}
+            />
+          </div>
+        );
+      })}
+    </>
+  );
 };

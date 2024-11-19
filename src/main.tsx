@@ -9,7 +9,7 @@ const router = createRouter({ routeTree });
 
 // biome-ignore lint/style/noNonNullAssertion:
 createRoot(document.getElementById("root")!).render(
-	<StrictMode>
-		<RouterProvider router={router} />
-	</StrictMode>,
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>,
 );
