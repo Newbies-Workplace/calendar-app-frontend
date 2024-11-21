@@ -20,8 +20,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
     if (diff <= 0) {
       return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
-
-    // Używamy dayjs, by zwrócić obiekt z jednostkami czasu
+ 
     const duration = dayjs.duration(diff);
 
     return {
@@ -48,7 +47,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         <h2 className="text-xl font-bold mb-2">{title}</h2>
         {description && <p className="text-md text-gray-700">{description}</p>}
         <p className="text-md text-black">Do końca głosowania:</p>
-        <p>{`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`}</p>
+        <p className="text-md text-black">{`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`}</p>
       </div>
     </div>
   );
