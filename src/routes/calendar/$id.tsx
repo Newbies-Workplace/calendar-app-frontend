@@ -5,7 +5,7 @@ import { NameModal } from "@/components/NameModal";
 import { RightPanel } from "@/components/RightPanel";
 import { Toolbar } from "@/components/Toolbar";
 import { useParticipantCookie } from "@/hooks/useParticipantCookie";
-import { Event, Participant, Vote } from "@/types/responses";
+import { Event, Participant, SseMessage, Vote } from "@/types/responses";
 import { myFetch } from "@/util/myFetch";
 import { createFileRoute } from "@tanstack/react-router";
 import dayjs from "dayjs";
@@ -43,10 +43,17 @@ function CalendarPage() {
   useEffect(() => {
     const eventSource = new EventSource(`${BACKEND_URL}/event/${eventId}`);
 
-    eventSource.onmessage = (event) => {
-      const data: Vote = JSON.parse(event.data);
+    eventSource.onmessage = (event: MessageEvent) => {
+      const data: SseMessage = JSON.parse(event.data);
 
-      replaceVote(data, data.day);
+      if (data.type === "participant_created") {
+        setParticipants((prevParticipants) => [
+          ...prevParticipants,
+          data.payload,
+        ]);
+      } else if (data.type === "termin_status_created") {
+        replaceVote(data.payload, data.payload.day);
+      }
     };
 
     return () => {
@@ -164,9 +171,17 @@ function CalendarPage() {
           </div>
         </div>
 
-        <div className={"w-1/3 h-screen bg-gray-300 flex flex-col gap-2 text-center"}>
+        <div
+          className={
+            "w-1/3 h-screen bg-gray-300 flex flex-col gap-2 text-center"
+          }
+        >
           {event !== undefined && (
-            <RightPanel title={event.name} description={event.description} countdown={event.voting_end}/>
+            <RightPanel
+              title={event.name}
+              description={event.description}
+              countdown={event.voting_end}
+            />
           )}
         </div>
       </div>

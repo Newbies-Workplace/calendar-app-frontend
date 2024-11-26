@@ -1,3 +1,13 @@
+export type SseMessage =
+  | {
+      type: "termin_status_created";
+      payload: Vote;
+    }
+  | {
+      type: "participant_created";
+      payload: Participant;
+    };
+
 export type Vote = {
   termin_status_id: string;
   participant_id: string;
@@ -17,5 +27,6 @@ export type Event = {
 
 export type Participant = {
   participant_id: string;
+  event_id: string;
   name: string;
 };
