@@ -164,9 +164,18 @@ function CalendarPage() {
           </div>
         </div>
 
-        <div className={"w-1/3 h-screen bg-gray-300 flex flex-col gap-2 text-center"}>
+        <div
+          className={
+            "w-1/3 h-screen bg-gray-300 flex flex-col gap-2 text-center"
+          }
+        >
           {event !== undefined && (
-            <RightPanel title={event.name} description={event.description} countdown={event.voting_end}/>
+            <RightPanel
+              title={event.name}
+              description={event.description}
+              countdown={event.voting_end}
+              participants={participants}
+            />
           )}
         </div>
       </div>
