@@ -181,6 +181,7 @@ function CalendarPage() {
               title={event.name}
               description={event.description}
               countdown={event.voting_end}
+              participants={participants}
             />
           )}
         </div>
