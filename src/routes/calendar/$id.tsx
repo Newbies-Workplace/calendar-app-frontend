@@ -152,7 +152,7 @@ function CalendarPage() {
       )}
 
       <div className={"flex w-screen h-screen text-black"}>
-        <div className={"w-2/3"}>
+        <div className="w-screen md:w-2/3">
           <Toolbar />
           <div
             className={
@@ -173,7 +173,7 @@ function CalendarPage() {
 
         <div
           className={
-            "w-1/3 h-screen bg-gray-300 flex flex-col gap-2 text-center"
+            "w-1/3 h-screen bg-gray-300 flex-col gap-2 text-center hidden md:flex"
           }
         >
           {event !== undefined && (

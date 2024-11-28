@@ -42,7 +42,7 @@ export const Calendar = ({
         );
 
         return (
-          <div key={`${year}-${monthNumber}`}>
+          <div className="w-full max-w-[800px] p-5 xs:p-10" key={`${year}-${monthNumber}`}>
             <Month
               year={year}
               monthNumber={monthNumber}
