@@ -55,10 +55,10 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         </p>
         <p className="text font-bold mb-2">Uczestnicy:</p>
         <div className="flex flex-wrap gap-2">
-          {participants?.map((participant) => (
+          {participants.map((participant) => (
             <span
               key={participant.participant_id}
-              className="p-2 bg-amber-100 rounded-md shadow-sm"
+              className="p-2 bg-white border-2 border-black rounded-md shadow-md"
             >
               {participant.name}
             </span>
