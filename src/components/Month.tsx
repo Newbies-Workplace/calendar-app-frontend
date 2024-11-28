@@ -41,22 +41,22 @@ export const Month: React.FC<MonthProps> = ({
   );
 
   return (
-    <div className="flex flex-col items-center w-[700px]">
-      <b className="text-black text-7xl w-full text-left p-4 mt-10">
+    <div className="flex flex-col items-center w-full">
+      <b className="text-black text-3xl xs:text-5xl w-full text-left p-4 mt-10">
         {monthName}
       </b>
-      <div className="grid grid-cols-[repeat(7,1fr)] w-[700px] gap-2.5 mb-2.5">
+      <div className="grid grid-cols-7 w-full gap-1 xs:gap-2.5 mb-2.5 ">
         {weekDays.map((day, index) => (
           <div
             // biome-ignore lint/suspicious/noArrayIndexKey:
             key={index}
-            className="w-24 text-center font-bold gap-6 border-black border-2 box-border text-black"
+            className="min-w-12 text-center font-bold text-black"
           >
             {day}
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-[repeat(7,1fr)] w-[700px] gap-2.5">
+      <div className="grid grid-cols-7 w-full gap-1 xs:gap-2.5">
         {emptyDays.slice(0, startDayOfWeek - 1).map((_, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey:
           <div key={index} />

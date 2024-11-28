@@ -54,9 +54,9 @@ export const Day: React.FC<DayProps> = ({
       className={`${hidden ? "opacity-30" : ""}`}
     >
       <div
-        className={`size-24 border border-black rounded-lg flex flex-col justify-between items-start relative p-2 ${backgroundColor}`}
+        className={`min-h-8 min-w-8 sm:min-h-12 sm:min-w-12 aspect-square border border-black rounded-lg flex flex-col justify-between items-start relative p-2 ${backgroundColor}`}
       >
-        <div className="flex gap-1 flex-wrap">
+        <div className="flex gap-3 flex-wrap">
           <div
             className={`w-4 h-4 rounded-full border border-black ${
               currentVote
