@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { Participant } from "@/types/responses";
 import { EndVoteModal } from "@/components/EndVoteModal";
+import { Modal } from "./Modal";
 
 type RightPanelProps = {
   title: string;
@@ -81,7 +82,9 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         </button>
       </div>
       {showEndVoteModal && (
+        <Modal onDismiss={closeModal}>
         <EndVoteModal onDismiss={closeModal} onFinish={handleFinishVote} />
+        </Modal>
       )}
     </div>
   );

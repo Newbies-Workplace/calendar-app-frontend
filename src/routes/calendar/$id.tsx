@@ -4,7 +4,6 @@ import { Modal } from "@/components/Modal";
 import { NameModal } from "@/components/NameModal";
 import { RightPanel } from "@/components/RightPanel";
 import { Toolbar } from "@/components/Toolbar";
-import { HelpModal } from "@/components/HelpModal";
 import { useParticipantCookie } from "@/hooks/useParticipantCookie";
 import { Event, Participant, SseMessage, Vote } from "@/types/responses";
 import { myFetch } from "@/util/myFetch";
@@ -211,7 +210,6 @@ function CalendarPage() {
           eventId={eventId}
         />
       )}
-      {activeModal && <HelpModal onDismiss={onDismiss} />}
         </Modal>
       )}
     </>

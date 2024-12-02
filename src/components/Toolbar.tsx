@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import { HelpModal } from "@/components/HelpModal";
 import { CircleHelp, Share2Icon, ChevronLeft} from "lucide-react";
 import React, { useState } from "react";
+import { Modal } from "./Modal";
 
 export const Toolbar: React.FC = () => {
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -62,7 +63,9 @@ export const Toolbar: React.FC = () => {
 
       {/* Modal pomocy */}
       {isHelpModalOpen && (
+        <Modal onDismiss={closeHelpModal}>
           <HelpModal onDismiss={closeHelpModal} />
+        </Modal>
       )}
     </div>
   );
