@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import { Participant } from "@/types/responses";
+import { EndVoteModal } from "@/components/EndVoteModal";
+import { Modal } from "./Modal";
 
 type RightPanelProps = {
   title: string;
@@ -33,8 +35,8 @@ export const RightPanel: React.FC<RightPanelProps> = ({
   countdown,
   participants,
 }) => {
-
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(countdown));
+  const [showEndVoteModal, setShowEndVoteModal] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,6 +45,14 @@ export const RightPanel: React.FC<RightPanelProps> = ({
 
     return () => clearInterval(interval);
   }, [countdown]);
+
+  const openModal = () => setShowEndVoteModal(true);
+  const closeModal = () => setShowEndVoteModal(false);
+
+  const handleFinishVote = () => {
+    console.log("Głosowanie zakończone");
+    closeModal();
+  };
 
   return (
     <div className="p-4">
@@ -64,7 +74,18 @@ export const RightPanel: React.FC<RightPanelProps> = ({
             </span>
           ))}
         </div>
+        <button
+          className="bg-gray-800 text-white hover:bg-gray-600 rounded-lg mt-4 p-3"
+          onClick={openModal}
+        >
+          Zakończ głosowanie
+        </button>
       </div>
+      {showEndVoteModal && (
+        <Modal onDismiss={closeModal}>
+        <EndVoteModal onDismiss={closeModal} onFinish={handleFinishVote} />
+        </Modal>
+      )}
     </div>
   );
 };

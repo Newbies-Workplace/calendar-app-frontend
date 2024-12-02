@@ -6,9 +6,8 @@ interface HelpModalProps {
 }
 
 export const HelpModal: React.FC<HelpModalProps> = ({ onDismiss }) => (
-  <>
-    <h1 className="text-black">Pomoc....</h1>
-
-    <Button onClick={onDismiss}>Zamknij</Button>
-  </>
+    <>
+      <h1 className="text-black pb-10">Pomoc....</h1>
+      <Button onClick={onDismiss}>Zamknij</Button>
+    </>
 );

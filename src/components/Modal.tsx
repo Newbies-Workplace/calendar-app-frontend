@@ -20,7 +20,7 @@ export const Modal: React.FC<ModalProps> = (props) => {
   }, [props]);
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center text-black">
+    <div className="fixed inset-0 flex items-center justify-center text-black z-10">
       <div
         onClick={props.onDismiss}
         className="fixed inset-0 bg-black bg-opacity-80"

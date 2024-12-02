@@ -1,8 +1,8 @@
 import Button from "@/components/Button";
-import { EndVoteModal } from "@/components/EndVoteModal";
 import { HelpModal } from "@/components/HelpModal";
-import { CircleHelp, Share2Icon, XIcon } from "lucide-react";
+import { CircleHelp, Share2Icon, ChevronLeft} from "lucide-react";
 import React, { useState } from "react";
+import { Modal } from "./Modal";
 
 export const Toolbar: React.FC = () => {
   const [isHelpModalOpen, setIsHelpModalOpen] = useState(false);
@@ -11,9 +11,6 @@ export const Toolbar: React.FC = () => {
 
   const openHelpModal = () => setIsHelpModalOpen(true);
   const closeHelpModal = () => setIsHelpModalOpen(false);
-
-  const openEndModal = () => setIsEndModalOpen(true);
-  const closeEndModal = () => setIsEndModalOpen(false);
 
   const copyEventLink = () => {
     const eventLink = window.location.href;
@@ -30,7 +27,23 @@ export const Toolbar: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex justify-between items-center h-12 px-3 bg-[#f5f7fa] shadow-md z-50">
+    <div className="w-full flex flex-row justify-between items-center h-12 px-3 bg-[#f5f7fa] shadow-md z-50">
+      <div>
+      {/* Przycisk kopiowania */}
+      <div className="flex items-center space-x-2">
+        <Button
+          onClick={copyEventLink}
+          className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
+        >
+          <Share2Icon width={24} height={24} className="text-gray-700" />
+        </Button>
+        {copySuccess && (
+          <span className="text-green-600 font-medium">{copySuccess}</span>
+        )}
+      </div>
+      </div>
+
+      <div className="flex flex-row gap-1">
       {/* Przycisk pomocy */}
       <Button
         onClick={openHelpModal}
@@ -38,39 +51,21 @@ export const Toolbar: React.FC = () => {
       >
         <CircleHelp width={24} height={24} className="text-gray-700" />
       </Button>
-      {/* Przycisk zakończenia wydarzenia */}
+
+      {/* Wysuwanie rightpanel 
       <Button
-        onClick={openEndModal}
+        onClick={openHelpModal}
         className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
       >
-        <XIcon width={24} height={24} className="text-gray-700" />
-      </Button>
-
-      {/* Przycisk kopiowania */}
-      <div className="flex items-center space-x-2">
-        {copySuccess && (
-          <span className="text-green-600 font-medium">{copySuccess}</span>
-        )}
-        <Button
-          onClick={copyEventLink}
-          className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
-        >
-          <Share2Icon width={24} height={24} className="text-gray-700" />
-        </Button>
+        <ChevronLeft width={24} height={24} className="text-gray-700" />
+      </Button>*/}
       </div>
 
       {/* Modal pomocy */}
       {isHelpModalOpen && (
-        <div className="flex flex-col">
+        <Modal onDismiss={closeHelpModal}>
           <HelpModal onDismiss={closeHelpModal} />
-        </div>
-      )}
-
-      {/* Modal zakończenia wydarzenia */}
-      {isEndModalOpen && (
-        <div className="flex flex-col">
-          <EndVoteModal onDismiss={closeEndModal} onFinish={() => {}} />
-        </div>
+        </Modal>
       )}
     </div>
   );
