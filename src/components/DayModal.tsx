@@ -39,18 +39,18 @@ export const DayModal: React.FC<DayModalProps> = (props) => {
             .filter((v) => v.status === "AVAILABLE")
             .map((vote) => {
               return (
-                <div
-                  key={vote.termin_status_id}
-                  className="inline-flex items-center text-sm border p-2 rounded-lg border-solid border-transparent bg-status-available/20 border-[#000000] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-status-available before:mr-2 before:rounded-[50%]"
-                >
-                  {
-                    props.participants.find(
-                      (participant) =>
-                        participant.participant_id === vote.participant_id,
-                    )?.name
-                  }
-                </div>
-              );
+              <div
+                key={vote.termin_status_id}
+                className="inline-flex items-center text-sm border p-2 rounded-lg border-solid border-transparent bg-status-available/20 border-[#000000] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-status-available before:mr-2 before:rounded-[50%]"
+              >
+                {
+                  props.participants.find(
+                    (participant) =>
+                      participant.participant_id === vote.participant_id,
+                  )?.name
+                }
+              </div>
+            );
             })
         )}
       </div>
@@ -59,7 +59,7 @@ export const DayModal: React.FC<DayModalProps> = (props) => {
         Niedostępni
       </div>
       <div className="flex justify-left flex-wrap gap-2.5 mb-2.5">
-        {votesForDate.filter((v) => v.status === "NOT_AVAILABLE").length <=
+        {votesForDate.filter((v) => v.status === "NOT_AVAILABLE").length <= 
         0 ? (
           <div>Brak głosów</div>
         ) : (
@@ -67,18 +67,18 @@ export const DayModal: React.FC<DayModalProps> = (props) => {
             .filter((v) => v.status === "NOT_AVAILABLE")
             .map((vote) => {
               return (
-                <div
-                  key={vote.termin_status_id}
-                  className="inline-flex items-center text-sm border p-2 rounded-lg border-solid border-transparent bg-status-not-available/20 border-[#000000] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-status-not-available before:mr-2 before:rounded-[50%]"
-                >
-                  {
-                    props.participants.find(
-                      (participant) =>
-                        participant.participant_id === vote.participant_id,
-                    )?.name
-                  }
-                </div>
-              );
+              <div
+                key={vote.termin_status_id}
+                className="inline-flex items-center text-sm border p-2 rounded-lg border-solid border-transparent bg-status-not-available/20 border-[#000000] before:content-[''] before:inline-block before:w-2.5 before:h-2.5 before:bg-status-not-available before:mr-2 before:rounded-[50%]"
+              >
+                {
+                  props.participants.find(
+                    (participant) =>
+                      participant.participant_id === vote.participant_id,
+                  )?.name
+                }
+              </div>
+            );
             })
         )}
       </div>
