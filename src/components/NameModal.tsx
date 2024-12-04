@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { Input } from "@/components/Input";
 import { Participant } from "@/types/responses";
 import { myFetch } from "@/util/myFetch";
 import React from "react";
@@ -47,22 +48,13 @@ export const NameModal: React.FC<NameModalProps> = (props) => {
         onSubmit={handleSubmit(onSubmit)}
         className="text-white flex flex-col gap-4"
       >
-        <div className="flex flex-col">
-          <label className="text-black object-top text-left" htmlFor={"name"}>
-            Twój nick
-          </label>
-          <input
-            className="border border-black bg-gray-100 p-2 rounded-lg text-black"
-            type="text"
-            id="name"
-            placeholder="Wpisz imię"
-            {...register("name", { required: true })}
-          />
-        </div>
-
-        {errors.name && (
-          <div className="text-red-500 text-sm">Imię jest wymagane</div>
-        )}
+        <Input
+          label="Twój nick"
+          type="text"
+          placeholder="Wpisz imię"
+          {...register("name", { required: "Imię jest wymagane" })}
+          error={errors.name?.message}
+        />
 
         <Button className="main primary" onClick={() => {}}>
           Gotowe

@@ -6,6 +6,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import dayjs from "dayjs";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Input } from "@/components/Input";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
@@ -20,10 +21,9 @@ function CreateEventPage() {
   const today = new Date();
   const defaultValue = new Date(today).toISOString().split("T")[0];
   const week = today.setDate(today.getDate() + 7);
-  const voteendingtomorrow = today.setDate(today.getDate() + 1);
+  const voteendingtomorrow = dayjs().add(24, 'hours').format('YYYY-MM-DDTHH:mm');
   const votingendtomorrow = new Date(voteendingtomorrow).toISOString();
   const defaultValue2 = new Date(week).toISOString().split("T")[0];
-  const datetimestr = `${defaultValue}T00:00`;
   const navigate = useNavigate();
 
   const {
@@ -42,6 +42,7 @@ function CreateEventPage() {
     },
     mode: "all",
   });
+  
   const [start, end] = watch(["start", "end"]);
 
   const onSubmit = (data: EventForm) => {
@@ -75,110 +76,61 @@ function CreateEventPage() {
           <h1 className="text-black border border-black bg-gray-100 p-4 rounded-lg w-full text-center mb-7 text-4xl font-bold font-mono">
             Stwórz wydarzenie
           </h1>
-          <form
-            className="text-lg leading-tight"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form className="text-lg leading-tight" onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-2 p-5">
-              <label htmlFor="name" className="text-black object-top text-left">
-                Nazwa wydarzenia
-              </label>
-              <input
-                className="border border-black bg-gray-100 p-2 rounded-lg text-black"
+              <Input
+                label="Nazwa wydarzenia"
                 type="text"
-                id="name"
-                placeholder="Wpisz nazwę"
-                {...register("name", { required: true })}
+                placeholder="Wpisz nazwę wydarzenia"
+                {...register("name", { required: "Nazwa jest wymagana" })}
+                error={errors.name?.message}
               />
-              {errors.name && (
-                <div className="text-red-500 text-sm">Nazwa jest wymagana</div>
-              )}
-              <label htmlFor="description" className="text-gray-700 pt-5">
-                Opis wydarzenia
-              </label>
-              <textarea
-                className="border border-black bg-gray-100 p-2 rounded-lg text-black"
-                id="description"
-                placeholder="Wpisz opis (opcjonalne)"
+
+              <Input
+                label="Opis wydarzenia"
+                multiline
+                placeholder="Wpisz opis wydarzenia (opcjonalne)"
                 {...register("description")}
               />
-              <label
-                htmlFor="voting_end"
-                className="text-black object-top text-left pt-5"
-              >
-                Czas zakończenia głosowania
-              </label>
-              <input
-                className="border border-black bg-gray-100 p-2 rounded-lg text-black"
+
+              <Input
+                label="Czas zakończenia głosowania"
                 type="datetime-local"
-                id="voting_end"
-                lang="pl"
-                min={datetimestr}
-                {...register("voting_end", { required: true })}
+                placeholder="Wybierz czas zakończenia"
+                min={voteendingtomorrow}
+                {...register("voting_end", { required: "Czas zakończenia głosowania jest wymagany" })}
+                error={errors.voting_end?.message}
               />
-              {errors.voting_end && (
-                <div className="text-red-500 text-sm">
-                  Czas zakończenia głosowania jest wymagany
-                </div>
-              )}
+
               <div className="flex space-x-5 w-full pt-5">
-                <div className="flex flex-col gap-2 w-1/2">
-                  <label
-                    htmlFor="start"
-                    className="text-black object-top text-left"
-                  >
-                    Początek terminów
-                  </label>
-                  <input
-                    className="border border-black bg-gray-100 p-2 rounded-lg text-black"
-                    type="date"
-                    id="start"
-                    lang="pl"
-                    {...register("start", {
-                      validate: () => dayjs(start).isBefore(dayjs(end)),
-                    })}
-                  />
-                </div>
-                <div className="flex flex-col gap-2 w-1/2">
-                  <label
-                    htmlFor="end"
-                    className="text-black object-top text-left"
-                  >
-                    Koniec terminów
-                  </label>
-                  <input
-                    className="border border-black bg-gray-100 p-2 rounded-lg text-black"
-                    type="date"
-                    id="end"
-                    lang="pl"
-                    {...register("end", {
-                      validate: () => dayjs(start).isBefore(dayjs(end)),
-                    })}
-                  />
-                </div>
+                <Input
+                  label="Początek terminów"
+                  type="date"
+                  placeholder="Wybierz początek"
+                  {...register("start", {
+                    validate: () => dayjs(start).isBefore(dayjs(end)) || "Początek musi być przed końcem",
+                  })}
+                  error={errors.start?.message}
+                />
+                <Input
+                  label="Koniec terminów"
+                  type="date"
+                  placeholder="Wybierz koniec"
+                  {...register("end", {
+                    validate: () => dayjs(start).isBefore(dayjs(end)) || "Koniec musi być po początku",
+                  })}
+                  error={errors.end?.message}
+                />
               </div>
-              {(errors.start || errors.end) && (
-                <div className="text-red-500 text-sm">
-                  Początek głosowania powinien być przed końcem
-                </div>
-              )}
-              <label
-                className="text-black object-top text-left pt-5"
-                htmlFor={"owner"}
-              >
-                Twój nick
-              </label>
-              <input
-                id={"owner"}
-                {...register("owner", { required: true })}
+
+              <Input
+                label="Twój nick"
+                type="text"
                 placeholder="Wpisz swój nick"
-                className="border border-black bg-gray-100 p-2 rounded-lg text-black"
+                {...register("owner", { required: "Twój nick jest wymagany" })}
+                error={errors.owner?.message}
               />
-              {errors.owner && (
-                <div className="text-red-500 text-sm">
-                  Twój nick jest wymagany
-                </div>
-              )}
+
               <button className="bg-gray-800 text-white hover:bg-gray-600 rounded-lg mt-4 h-11">
                 Szukaj terminów
               </button>
