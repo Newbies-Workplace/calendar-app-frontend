@@ -68,11 +68,13 @@ export const RightPanel: React.FC<RightPanelProps> = ({
         />
       )}
 
-<div
-  className={`h-full bg-gray-100 transition-all duration-300 ease-in-out z-20 overflow-hidden border-2 border-gray-800 ${
-    window.innerWidth >= 1024 ? "fixed top-0 right-0 w-2/3" : `fixed top-0 right-0 ${isPanelOpen ? "w-2/3" : "w-0"}`
-  } lg:w-1/3`}
->
+      <div
+        className={`h-full bg-gray-100 transition-all duration-300 ease-in-out z-20 overflow-hidden border-2 border-gray-800 ${
+          window.innerWidth >= 1024
+            ? "fixed top-0 right-0 w-2/3"
+            : `fixed top-0 right-0 ${isPanelOpen ? "w-2/3" : "w-0"}`
+        } lg:w-1/3`}
+      >
         <div className=" p-4 ">
           <h1 className="text-xl font-bold mb-2">{title}</h1>
           <p className="text-md text-gray-700">{description}</p>
@@ -106,15 +108,14 @@ export const RightPanel: React.FC<RightPanelProps> = ({
       </div>
 
       <button
-  onClick={togglePanel}
-  className={`fixed top-1.5 right-0 bg-gray-800 text-white p-1.5 rounded-l-lg z-30 transition-all duration-300 ease-in-out ${isPanelOpen ? "rotate-360" : ""} lg:hidden`}
-  style={{
-    right: isPanelOpen ? "calc(66.66%)" : "0",
-  }}
->
-  {isPanelOpen ? "→" : "←"}
-</button>
-
+        onClick={togglePanel}
+        className={`fixed top-1.5 right-0 bg-gray-800 text-white p-1.5 rounded-l-lg z-30 transition-all duration-300 ease-in-out ${isPanelOpen ? "rotate-360" : ""} lg:hidden`}
+        style={{
+          right: isPanelOpen ? "calc(66.66%)" : "0",
+        }}
+      >
+        {isPanelOpen ? "→" : "←"}
+      </button>
     </div>
   );
 };

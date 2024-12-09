@@ -21,7 +21,9 @@ function CreateEventPage() {
   const today = new Date();
   const defaultValue = new Date(today).toISOString().split("T")[0];
   const week = today.setDate(today.getDate() + 7);
-  const voteendingtomorrow = dayjs().add(24, 'hours').format('YYYY-MM-DDTHH:mm');
+  const voteendingtomorrow = dayjs()
+    .add(24, "hours")
+    .format("YYYY-MM-DDTHH:mm");
   const votingendtomorrow = new Date(voteendingtomorrow).toISOString();
   const defaultValue2 = new Date(week).toISOString().split("T")[0];
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ function CreateEventPage() {
     },
     mode: "all",
   });
-  
+
   const [start, end] = watch(["start", "end"]);
 
   const onSubmit = (data: EventForm) => {
@@ -65,7 +67,11 @@ function CreateEventPage() {
       <div className="flex-1 h-full bg-black flex-col justify-center items-center overflow-hidden relative hidden lg:flex">
         <div className="w-full h-full bg-[url('/tlo.jpg')] bg-center bg-cover blur-lg scale-110" />
         <div className="absolute flex-col justify-center items-center gap-2 flex">
-          <img className="logo w-1/4 h-auto mb-4 transition-all duration-500" src="/icon.png" alt="logo" />
+          <img
+            className="logo w-1/4 h-auto mb-4 transition-all duration-500"
+            src="/icon.png"
+            alt="logo"
+          />
           <h1 className="text-white text-2xl lg:text-3xl font-bold italic text-center transition-all duration-500">
             Newbies Calendar
           </h1>
@@ -76,7 +82,10 @@ function CreateEventPage() {
           <h1 className="text-black border border-black bg-gray-100 p-4 rounded-lg w-full text-center mb-7 text-4xl font-bold font-mono">
             Stwórz wydarzenie
           </h1>
-          <form className="text-lg leading-tight" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="text-lg leading-tight"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="flex flex-col gap-2 p-5">
               <Input
                 label="Nazwa wydarzenia"
@@ -98,7 +107,9 @@ function CreateEventPage() {
                 type="datetime-local"
                 placeholder="Wybierz czas zakończenia"
                 min={voteendingtomorrow}
-                {...register("voting_end", { required: "Czas zakończenia głosowania jest wymagany" })}
+                {...register("voting_end", {
+                  required: "Czas zakończenia głosowania jest wymagany",
+                })}
                 error={errors.voting_end?.message}
               />
 
@@ -108,7 +119,9 @@ function CreateEventPage() {
                   type="date"
                   placeholder="Wybierz początek"
                   {...register("start", {
-                    validate: () => dayjs(start).isBefore(dayjs(end)) || "Początek musi być przed końcem",
+                    validate: () =>
+                      dayjs(start).isBefore(dayjs(end)) ||
+                      "Początek musi być przed końcem",
                   })}
                   error={errors.start?.message}
                 />
@@ -117,7 +130,9 @@ function CreateEventPage() {
                   type="date"
                   placeholder="Wybierz koniec"
                   {...register("end", {
-                    validate: () => dayjs(start).isBefore(dayjs(end)) || "Koniec musi być po początku",
+                    validate: () =>
+                      dayjs(start).isBefore(dayjs(end)) ||
+                      "Koniec musi być po początku",
                   })}
                   error={errors.end?.message}
                 />
