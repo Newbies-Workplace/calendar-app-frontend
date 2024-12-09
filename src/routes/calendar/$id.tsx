@@ -152,11 +152,11 @@ function CalendarPage() {
       )}
 
       <div className={"flex w-screen h-screen text-black"}>
-        <div className="w-screen md:w-2/3">
+        <div className="w-screen lg:w-2/3">
           <Toolbar />
           <div
            className={
-           "overflow-y-auto overflow-x-hidden h-[calc(100%-48px)] flex flex-col items-center gap-5"
+           "w-screen lg:w-2/3 overflow-y-auto overflow-x-hidden h-[calc(100%-48px)] flex flex-col items-center gap-5"
           }
            >
             {event !== undefined && (
@@ -173,7 +173,7 @@ function CalendarPage() {
 
         <div 
         className={
-          "w-1/3 h-screen bg-gray-300 flex-col gap-2 text-center hidden md:flex"
+          " h-screen bg-gray-300 flex-col gap-2 text-center flex"
           }
           >
           {event !== undefined && (

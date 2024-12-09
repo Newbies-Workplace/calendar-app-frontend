@@ -43,22 +43,14 @@ export const Toolbar: React.FC = () => {
       </div>
       </div>
 
-      <div className="flex flex-row gap-1">
       {/* Przycisk pomocy */}
+      <div className="flex flex-row gap-1 pr-5">
       <Button
         onClick={openHelpModal}
         className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
       >
         <CircleHelp width={24} height={24} className="text-gray-700" />
       </Button>
-
-      {/* Wysuwanie rightpanel 
-      <Button
-        onClick={openHelpModal}
-        className="flex items-center justify-center size-9 bg-white border border-gray-300 hover:bg-gray-200 rounded-md"
-      >
-        <ChevronLeft width={24} height={24} className="text-gray-700" />
-      </Button>*/}
       </div>
 
       {/* Modal pomocy */}
