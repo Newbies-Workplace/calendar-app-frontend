@@ -10,7 +10,7 @@ export const EndVoteModal: React.FC<EndVoteModalProps> = ({
   onDismiss,
   onFinish,
 }) => (
-    <>
+  <>
     <h1 className="text-left text-4xl text-black pb-7">
       Czy na pewno chcesz zakończyć głosowanie?
     </h1>
@@ -23,5 +23,5 @@ export const EndVoteModal: React.FC<EndVoteModalProps> = ({
         Zakończ
       </Button>
     </div>
-    </>
+  </>
 );

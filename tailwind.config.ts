@@ -4,8 +4,8 @@ const config: Config = {
   content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      screens:{
-        'xs': '425px',
+      screens: {
+        xs: "425px",
       },
       colors: {
         "status-available": "#67DF52",

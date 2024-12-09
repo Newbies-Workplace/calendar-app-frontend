@@ -86,13 +86,13 @@ function CalendarPage() {
 
     myFetch<Participant[]>(
       `${BACKEND_URL}/rest/events/${eventId}/participants`,
-       {
-      headers: {
-        "Content-Type": "application/json",
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "GET",
       },
-      method: "GET",
-    },
-  )
+    )
       .then((data) => {
         setParticipants(data);
       })
@@ -152,13 +152,13 @@ function CalendarPage() {
       )}
 
       <div className={"flex w-screen h-screen text-black"}>
-        <div className="w-screen md:w-2/3">
+        <div className="w-screen lg:w-2/3">
           <Toolbar />
           <div
-           className={
-           "overflow-y-auto overflow-x-hidden h-[calc(100%-48px)] flex flex-col items-center gap-5"
-          }
-           >
+            className={
+              "w-screen lg:w-2/3 overflow-y-auto overflow-x-hidden h-[calc(100%-48px)] flex flex-col items-center gap-5"
+            }
+          >
             {event !== undefined && (
               <Calendar
                 votes={votes}
@@ -171,11 +171,9 @@ function CalendarPage() {
           </div>
         </div>
 
-        <div 
-        className={
-          "w-1/3 h-screen bg-gray-300 flex-col gap-2 text-center hidden md:flex"
-          }
-          >
+        <div
+          className={" h-screen bg-gray-300 flex-col gap-2 text-center flex"}
+        >
           {event !== undefined && (
             <RightPanel
               title={event.name}
@@ -190,26 +188,26 @@ function CalendarPage() {
       {activeModal !== null && (
         <Modal onDismiss={onDismiss}>
           {activeModal === "day" && modalDate && (
-        <DayModal
-          day={modalDate}
-          votes={votes}
-          onVotePress={(day, isAvailable) => {
-            submitVote(day, isAvailable);
-            onDismiss();
-          }}
-          participants={participants}
-        />
-      )}
-      {activeModal === "name" && (
-        <NameModal
-          onSubmit={(participant) => {
-            saveParticipantToCookie(eventId, participant);
-            setParticipants([...participants, participant]);
-            onDismiss();
-          }}
-          eventId={eventId}
-        />
-      )}
+            <DayModal
+              day={modalDate}
+              votes={votes}
+              onVotePress={(day, isAvailable) => {
+                submitVote(day, isAvailable);
+                onDismiss();
+              }}
+              participants={participants}
+            />
+          )}
+          {activeModal === "name" && (
+            <NameModal
+              onSubmit={(participant) => {
+                saveParticipantToCookie(eventId, participant);
+                setParticipants([...participants, participant]);
+                onDismiss();
+              }}
+              eventId={eventId}
+            />
+          )}
         </Modal>
       )}
     </>

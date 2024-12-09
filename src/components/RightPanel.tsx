@@ -37,6 +37,7 @@ export const RightPanel: React.FC<RightPanelProps> = ({
 }) => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft(countdown));
   const [showEndVoteModal, setShowEndVoteModal] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,38 +55,67 @@ export const RightPanel: React.FC<RightPanelProps> = ({
     closeModal();
   };
 
+  const togglePanel = () => {
+    setIsPanelOpen((prev) => !prev);
+  };
+
   return (
-    <div className="p-4">
-      <div className="border-2 border-black bg-gray-100 p-4 rounded-md shadow-md">
-        <h1 className="text-xl font-bold mb-2">{title}</h1>
-        <p className="text-md text-gray-700">{description}</p>
-        <p className="text font-bold mb-2">Do końca głosowania:</p>
-        <p className="text-md text-black">
-          {`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`}
-        </p>
-        <p className="text font-bold mb-2">Uczestnicy:</p>
-        <div className="flex flex-wrap gap-2">
-          {participants.map((participant) => (
-            <span
-              key={participant.participant_id}
-              className="p-2 bg-white border-2 border-black rounded-md shadow-md"
-            >
-              {participant.name}
-            </span>
-          ))}
-        </div>
-        <button
-          className="bg-gray-800 text-white hover:bg-gray-600 rounded-lg mt-4 p-3"
-          onClick={openModal}
-        >
-          Zakończ głosowanie
-        </button>
-      </div>
-      {showEndVoteModal && (
-        <Modal onDismiss={closeModal}>
-        <EndVoteModal onDismiss={closeModal} onFinish={handleFinishVote} />
-        </Modal>
+    <div className="relative">
+      {isPanelOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-10"
+          onClick={togglePanel}
+        />
       )}
+
+      <div
+        className={`h-full bg-gray-100 transition-all duration-300 ease-in-out z-20 overflow-hidden border-2 border-gray-800 ${
+          window.innerWidth >= 1024
+            ? "fixed top-0 right-0 w-2/3"
+            : `fixed top-0 right-0 ${isPanelOpen ? "w-2/3" : "w-0"}`
+        } lg:w-1/3`}
+      >
+        <div className=" p-4 ">
+          <h1 className="text-xl font-bold mb-2">{title}</h1>
+          <p className="text-md text-gray-700">{description}</p>
+          <p className="text font-bold mb-2">Do końca głosowania:</p>
+          <p className="text-md text-black">
+            {`${timeLeft.days}d ${timeLeft.hours}h ${timeLeft.minutes}m ${timeLeft.seconds}s`}
+          </p>
+          <p className="text font-bold mb-2">Uczestnicy:</p>
+          <div className="flex flex-wrap gap-2">
+            {participants.map((participant) => (
+              <span
+                key={participant.participant_id}
+                className="p-2 bg-white border-2 border-black rounded-md shadow-md"
+              >
+                {participant.name}
+              </span>
+            ))}
+          </div>
+          <button
+            className="bg-gray-800 text-white hover:bg-gray-600 rounded-lg mt-4 p-3"
+            onClick={openModal}
+          >
+            Zakończ głosowanie
+          </button>
+        </div>
+        {showEndVoteModal && (
+          <Modal onDismiss={closeModal}>
+            <EndVoteModal onDismiss={closeModal} onFinish={handleFinishVote} />
+          </Modal>
+        )}
+      </div>
+
+      <button
+        onClick={togglePanel}
+        className={`fixed top-1.5 right-0 bg-gray-800 text-white p-1.5 rounded-l-lg z-30 transition-all duration-300 ease-in-out ${isPanelOpen ? "rotate-360" : ""} lg:hidden`}
+        style={{
+          right: isPanelOpen ? "calc(66.66%)" : "0",
+        }}
+      >
+        {isPanelOpen ? "→" : "←"}
+      </button>
     </div>
   );
 };
