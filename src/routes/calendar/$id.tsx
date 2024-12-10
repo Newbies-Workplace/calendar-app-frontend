@@ -4,6 +4,7 @@ import { Modal } from "@/components/Modal";
 import { NameModal } from "@/components/NameModal";
 import { RightPanel } from "@/components/RightPanel";
 import { Toolbar } from "@/components/Toolbar";
+import { useKeyPressed } from "@/hooks/useKeyPressed";
 import { useParticipantCookie } from "@/hooks/useParticipantCookie";
 import { Event, Participant, SseMessage, Vote } from "@/types/responses";
 import { myFetch } from "@/util/myFetch";
@@ -32,9 +33,18 @@ function CalendarPage() {
   const [votes, setVotes] = useState<Vote[]>([]);
   const [participants, setParticipants] = useState<Participant[]>([]);
 
+  const isShiftPressed = useKeyPressed("Shift");
+  const isControlPressed = useKeyPressed("Control");
+
   const onDayClick = (date: string) => {
-    setModalDate(date);
-    setActiveModal("day");
+    if (isShiftPressed) {
+      submitVote(date, true);
+    } else if (isControlPressed) {
+      submitVote(date, false);
+    } else {
+      setModalDate(date);
+      setActiveModal("day");
+    }
   };
   const onDismiss = () => {
     setActiveModal(null);
@@ -151,12 +161,12 @@ function CalendarPage() {
         </Helmet>
       )}
 
-      <div className={"flex w-screen h-screen text-black"}>
+      <div className={"flex w-screen h-screen overflow-hidden text-black"}>
         <div className="w-screen lg:w-2/3">
           <Toolbar />
           <div
             className={
-              "w-screen lg:w-2/3 overflow-y-auto overflow-x-hidden h-[calc(100%-48px)] flex flex-col items-center gap-5"
+              "flex justify-center items-center w-full h-[calc(100%-48px)] overflow-hidden"
             }
           >
             {event !== undefined && (
@@ -172,7 +182,9 @@ function CalendarPage() {
         </div>
 
         <div
-          className={" h-screen bg-gray-300 flex-col gap-2 text-center flex"}
+          className={
+            "flex-shrink-0 w-full lg:w-1/3 h-full bg-gray-300 flex flex-col gap-2 text-center"
+          }
         >
           {event !== undefined && (
             <RightPanel
