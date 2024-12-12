@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/Input";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
@@ -27,6 +28,7 @@ function CreateEventPage() {
   const votingendtomorrow = new Date(voteendingtomorrow).toISOString();
   const defaultValue2 = new Date(week).toISOString().split("T")[0];
   const navigate = useNavigate();
+  const [name, setName] = useLocalStorage("username", "");
 
   const {
     register,
@@ -40,7 +42,7 @@ function CreateEventPage() {
       voting_end: votingendtomorrow,
       start: defaultValue,
       end: defaultValue2,
-      owner: "",
+      owner: name,
     },
     mode: "all",
   });
@@ -144,6 +146,8 @@ function CreateEventPage() {
                 placeholder="Wpisz swój nick"
                 {...register("owner", { required: "Twój nick jest wymagany" })}
                 error={errors.owner?.message}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
 
               <button className="bg-gray-800 text-white hover:bg-gray-600 rounded-lg mt-4 h-11">

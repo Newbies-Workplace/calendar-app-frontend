@@ -214,7 +214,6 @@ function CalendarPage() {
             <NameModal
               onSubmit={(participant) => {
                 saveParticipantToCookie(eventId, participant);
-                setParticipants([...participants, participant]);
                 onDismiss();
               }}
               eventId={eventId}
