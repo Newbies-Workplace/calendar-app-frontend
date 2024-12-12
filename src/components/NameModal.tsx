@@ -4,6 +4,7 @@ import { Participant } from "@/types/responses";
 import { myFetch } from "@/util/myFetch";
 import React from "react";
 import { useForm } from "react-hook-form";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 const BACKEND_URL = process.env.CALENDAR_BACKEND_URL;
 
@@ -23,7 +24,10 @@ export const NameModal: React.FC<NameModalProps> = (props) => {
     formState: { errors },
   } = useForm<NameForm>({ mode: "all" });
 
+  const [name, setName] = useLocalStorage("username", "");
+
   const onSubmit = (data: NameForm) => {
+    setName(data.name);
     myFetch<Participant>(
       `${BACKEND_URL}/rest/events/${props.eventId}/participants`,
       {
@@ -54,6 +58,8 @@ export const NameModal: React.FC<NameModalProps> = (props) => {
           placeholder="Wpisz imię"
           {...register("name", { required: "Imię jest wymagane" })}
           error={errors.name?.message}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
 
         <Button className="main primary" onClick={() => {}}>
